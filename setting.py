@@ -3,12 +3,12 @@
 """
 DEBUG = False
 
-LOG_DIR = ''  # df: /tmp/zhihu  debug模式下存放日志
+LOG_DIR = '/tmp/zhihu'  # df: /tmp/zhihu  debug模式下存放日志
 
-COOKIE_FILE = ''  # df: /tmp/cookies.pick   缓存的cookie文件
+COOKIE_FILE = '/tmp/cookies.pick'  # df: /tmp/cookies.pick   缓存的cookie文件
 
-SAVE_DIR = ''  # df: /tmp/zhihu_save   保存回答到本地
+SAVE_DIR = '/tmp/zhihu_save'  # df: /tmp/zhihu_save   保存回答到本地
 
-USER = ''  # 必填  账号
+USER = '13315728454'  # 必填  账号
 
-PASSWORD = ''   # 必填  密码
+PASSWORD = 'shenzhenmao18'   # 必填  密码

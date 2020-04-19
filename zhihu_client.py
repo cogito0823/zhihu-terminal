@@ -31,10 +31,10 @@ class ZhihuClient(aiohttp.ClientSession):
         headers = {
             'Host': 'www.zhihu.com',
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
-                          '(KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586',
-            'Connection': 'Keep-Alive',
+                          '(KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36',
+            #'Connection': 'Keep-Alive',
             'Referer': 'https://www.zhihu.com/',
-            'accept-encoding': 'gzip, deflate',
+            'accept-encoding': 'gzip, deflate'
         }
         self._default_headers = headers
         self.logger = get_logger()
@@ -65,7 +65,7 @@ class ZhihuClient(aiohttp.ClientSession):
             'username': self.user,
             'password': self.password,
             'lang': 'en',  # en 4位验证码, cn 中文验证码
-            'ref_source': 'homepage',
+            'ref_source': 'other_https://www.zhihu.com/signin?next=%2F',
             'utm_source': ''
         }
         xsrf = await self._get_xsrf()
@@ -81,9 +81,9 @@ class ZhihuClient(aiohttp.ClientSession):
             'Host': 'www.zhihu.com',
             'Referer': 'https://www.zhihu.com/',
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
-                          '(KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586',
+                          '(KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36',
             'content-type': 'application/x-www-form-urlencoded',
-            'x-zse-83': '3_1.1',
+            'x-zse-83': '3_2.0',
             'x-xsrftoken': xsrf
         }
         data = self._encrypt(login_data)
@@ -190,7 +190,7 @@ class ZhihuClient(aiohttp.ClientSession):
     def _encrypt(form_data: dict) -> str:
         with open(f'./static/encrypt.js') as f:
             js = execjs.compile(f.read())
-            return js.call('Q', urlencode(form_data))
+            return js.call('b', urlencode(form_data))
 
 
 if __name__ == '__main__':
@@ -198,8 +198,9 @@ if __name__ == '__main__':
 
     async def test():
         client = ZhihuClient(user=USER, password=PASSWORD)
-        await client.login(load_cookies=True)
+        await client.login(load_cookies=False)
         await client.close()
 
     asyncio.run(test())
-
+    
+    

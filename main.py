@@ -366,8 +366,8 @@ async def deal_remd(spider):
 
 async def run(client):
     spider = DataExtractor(client)
-    output = await spider.get_self_info()
-    print_colour(f'hello {output["name"]} 欢迎使用terminal-zhihu!', 'ultramarine')
+    self_info = await spider.get_self_info()
+    print_colour(f'hello {self_info["name"]} 欢迎使用terminal-zhihu!', 'ultramarine')
     flag = True
     while flag:
         print_colour('', 'yellow')
