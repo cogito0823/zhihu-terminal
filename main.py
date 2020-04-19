@@ -134,10 +134,10 @@ async def deal_comments_by_id(spider, uid):
             print_vote_comments(result, 'neutral')
         elif com2_cmd[0] == 'reply' and len(com2_cmd) == 2:
             # todo 回复评论
-            data = {
-                'content': com2_cmd[1],
-                'replyToId': uid,
-            }
+            # data = {
+            #     'content': com2_cmd[1],
+            #     'replyToId': uid,
+            # }
             print_colour('功能还在开发中...', 'red')
             continue
         else:
