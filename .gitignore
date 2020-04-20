@@ -112,3 +112,6 @@ cookies.pick
 
 # node_modules/
 /node_modules/
+
+# setting.py
+/setting.py
