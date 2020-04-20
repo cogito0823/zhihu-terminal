@@ -19,6 +19,7 @@ from urllib.parse import urlencode
 from utils import print_colour
 from log import get_logger
 from setting import COOKIE_FILE
+import detect_captcha
 
 
 class ZhihuClient(aiohttp.ClientSession):
@@ -136,7 +137,13 @@ class ZhihuClient(aiohttp.ClientSession):
             # TODO 验证码自动识别实现
             loop = asyncio.get_running_loop()
             loop.run_in_executor(None, img.show)
-            capt = input('请输入图片里的验证码：')
+            whether_use_detect_aptcha =input('是否使用打码平台(y|n): ')
+            if whether_use_detect_aptcha == 'y':
+                    # 这里可自行集成验证码识别模块
+                    pic_str = detect_captcha.detect('captcha.jpg')
+                    capt = pic_str
+            else:
+                capt = input('请输入图片里的验证码：')
             # 这里必须先把参数 POST 验证码接口
             await self.post(url, data={'input_text': capt})
             return capt
