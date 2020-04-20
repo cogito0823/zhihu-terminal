@@ -417,7 +417,7 @@ async def main():
     while True:
         try:
             check_setting()
-            use_default_account = input('是否使用默认账号(y|n):')
+            use_default_account = input('是否使用默认账号(y|n): ')
             if use_default_account == 'y':
                 USER = default_username
                 PASSWORD = default_password
