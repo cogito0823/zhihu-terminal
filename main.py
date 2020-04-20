@@ -16,8 +16,8 @@ from print_beautify import print_save
 from utils import print_colour
 from utils import get_com_func
 
-from setting import USER
-from setting import PASSWORD
+from setting import USER as default_username
+from setting import PASSWORD as default_password
 from setting import SAVE_DIR
 
 
@@ -35,7 +35,7 @@ def help_recommend():
     output = "\n" \
            "**********************************************************\n" \
            "**  f:                       刷新推荐内容\n" \
-           "**  r:                       再次显示(重新显示回答)\n" \
+           "**  r:                       再次显示本层内容\n" \
            "**  read:article_id          查看回答具体内容(进入下一级菜单)\n" \
            "**  question:question_id     查看问题下的其他回答(进入下一级菜单)\n" \
            "**  back:                    返回上层\n" \
@@ -47,6 +47,7 @@ def help_recommend():
 def help_article():
     output = "\n" \
             "**********************************************************\n" \
+            "**  r                       再次显示本层内容\n" \
             "**  back                    返回上层\n" \
             "**  q                       退出系统\n" \
             "**  save                    保存到本地\n" \
@@ -95,12 +96,12 @@ def help_question():
             "**  read:article_id         查看回答具体内容(进入下一级菜单)\n" \
             "**  n                       显示下一页\n" \
             "**  p                       显示上一页\n" \
-            "**  r                       再次显示(重新显示回答)\n" \
+            "**  r                       再次显示本层内容\n" \
             "**********************************************************\n"
     return output
 
 
-def exit(cmd: str):
+def app_exit(cmd: str):
     if cmd in('q', 'quit', 'exit'):
         sys.exit()
 
@@ -122,7 +123,7 @@ async def deal_comments_by_id(spider, uid):
         if not com2_cmd[0]:
             print_colour('输入有误!', 'red')
             continue
-        exit(com2_cmd[0])
+        app_exit(com2_cmd[0])
         if com2_cmd[0] == 'back':
             break
         elif com2_cmd[0] == 'up':
@@ -166,7 +167,7 @@ async def deal_comments(spider, result, paging):
         if not comm_cmd:
             print_colour('输入有误!', 'red')
             continue
-        exit(comm_cmd[0])
+        app_exit(comm_cmd[0])
         if comm_cmd[0] == 'back':
             break
         elif comm_cmd[0] == 'n':
@@ -213,10 +214,13 @@ async def deal_article(spider, article):
         if not arl_cmd:
             print_colour('输入有误!', 'red')
             continue
-        exit(arl_cmd)
+        app_exit(arl_cmd)
         if arl_cmd == 'back':
             break
-
+        
+        elif arl_cmd == 'r':
+            print_article_content(article)
+            continue
         elif arl_cmd in ('up', 'down', 'neutral', 'thank', 'unthank'):
 
             uid = article.get('id')
@@ -267,7 +271,7 @@ async def deal_question(spider, question_id, uid):
         if not ques_cmd:
             print_colour('输入有误!', 'red')
             continue
-        exit(ques_cmd[0])
+        app_exit(ques_cmd[0])
         if ques_cmd[0] == 'read':
             if len(ques_cmd) != 2:
                 print_colour('输入有误!', 'red')
@@ -326,7 +330,7 @@ async def deal_remd(spider):
         if not remd_cmd:
             print_colour('输入有误!', 'red')
             continue
-        exit(remd_cmd[0])
+        app_exit(remd_cmd[0])
         if remd_cmd[0] == 'f':
             is_print = True
             continue
@@ -338,7 +342,7 @@ async def deal_remd(spider):
                 print_colour('输入有误!', 'red')
                 continue
             if remd_cmd[1] not in ids:
-                print_colour('输入id有误!', 'red')
+                print_colour('输入id有误! 请检查id是否在此页', 'red')
                 continue
             output = [d for d in recommend_articles if d['id'] == remd_cmd[1]][0]
             print_article_content(output)
@@ -375,7 +379,7 @@ async def run(client):
         if not cmd:
             print_colour('输入有误!', 'red')
             continue
-        exit(cmd)
+        app_exit(cmd)
         if cmd == 'remd':
             await deal_remd(spider)
         elif cmd == 'aten':
@@ -393,7 +397,7 @@ def check_setting():
         os.makedirs(save_dir)
 
 
-async def login(user, password):
+async def login(user, password, whether_load_cookies = True):
     """
     登录
     :param user:
@@ -402,7 +406,7 @@ async def login(user, password):
     """
     client = ZhihuClient(user, password)
     load_cookies = False
-    if os.path.exists(client.cookie_file):
+    if whether_load_cookies and os.path.exists(client.cookie_file):
         # 如果cookie缓存存在优先读取缓存
         load_cookies = True
     await client.login(load_cookies=load_cookies)
@@ -410,17 +414,29 @@ async def login(user, password):
 
 
 async def main():
-    try:
-        check_setting()
-        client = await login(USER, PASSWORD)
-        print_logo()
-        await run(client)
-    # except Exception as e:
-    #     print_colour(e, 'red')
-    finally:
-        print_colour('欢迎再次使用')
-        await asyncio.sleep(0)
-        await client.close()
+    while True:
+        try:
+            check_setting()
+            use_default_account = input('是否使用默认账号(y|n):')
+            if use_default_account == 'y':
+                USER = default_username
+                PASSWORD = default_password
+            elif use_default_account == 'n':
+                USER = input('请输入手机号：')
+                PASSWORD = input('请输入密码')
+            else:
+                print('输入有误！')
+                continue
+            client = await login(USER, PASSWORD, False)
+            print_logo()
+            await run(client)
+        # except Exception as e:
+        #     print_colour(e, 'red')
+        finally:
+            print_colour('欢迎再次使用')
+            await asyncio.sleep(0)
+            await client.close()
+            break
 
 
 if __name__ == '__main__':
