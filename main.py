@@ -414,15 +414,17 @@ async def login(user, password, whether_load_cookies = True):
 
 
 async def main():
-    while True:
-        try:
+    try:
+        while True:
             check_setting()
             use_default_account = input('是否使用默认账号(y|n): ')
             if use_default_account == 'y':
                 USER = default_username
                 PASSWORD = default_password
             elif use_default_account == 'n':
-                USER = input('请输入手机号：')
+                USER = input('请输入手机号(输入"back"可以返回上级选择)：')
+                if USER == 'back':
+                    continue
                 PASSWORD = input('请输入密码')
             else:
                 print('输入有误！')
@@ -430,13 +432,13 @@ async def main():
             client = await login(USER, PASSWORD, False)
             print_logo()
             await run(client)
-        # except Exception as e:
-        #     print_colour(e, 'red')
-        finally:
-            print_colour('欢迎再次使用')
-            await asyncio.sleep(0)
-            await client.close()
             break
+    # except Exception as e:
+    #     print_colour(e, 'red')
+    finally:
+        print_colour('欢迎再次使用')
+        await asyncio.sleep(0)
+        await client.close()
 
 
 if __name__ == '__main__':
