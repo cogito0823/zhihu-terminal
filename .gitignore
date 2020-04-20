@@ -106,3 +106,9 @@ venv.bak/
 /static/cookies.pick
 .idea/
 cookies.pick
+
+# .vscode/
+/.vscode/
+
+# node_modules/
+/node_modules/
