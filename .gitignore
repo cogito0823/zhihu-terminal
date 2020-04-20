@@ -115,3 +115,7 @@ cookies.pick
 
 # setting.py
 /setting.py
+
+/*.ipynb
+
+/*.txt
