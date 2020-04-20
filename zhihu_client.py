@@ -200,7 +200,6 @@ if __name__ == '__main__':
         client = ZhihuClient(user=USER, password=PASSWORD)
         await client.login(load_cookies=False)
         await client.close()
-
     asyncio.run(test())
     
     
