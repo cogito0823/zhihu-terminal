@@ -70,38 +70,42 @@ class ZhihuClient(aiohttp.ClientSession):
             'utm_source': ''
         }
         xsrf = await self._get_xsrf()
-        captcha = await self._get_captcha()
-        timestamp = int(time.time() * 1000)
-        login_data.update({
-            'captcha': captcha,
-            'timestamp': timestamp,
-            'signature': self._get_signature(timestamp, login_data)
-        })
         headers = {
-            'accept-encoding': 'gzip, deflate, br',
-            'Host': 'www.zhihu.com',
-            'Referer': 'https://www.zhihu.com/',
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
-                          '(KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36',
-            'content-type': 'application/x-www-form-urlencoded',
-            'x-zse-83': '3_2.0',
-            'x-xsrftoken': xsrf
-        }
-        data = self._encrypt(login_data)
-        url = 'https://www.zhihu.com/api/v3/oauth/sign_in'
-        async with self.post(url, data=data, headers=headers) as r:
-            resp = await r.text()
-            if 'error' in resp:
-                print_colour(json.loads(resp)['error'], 'red')
-                self.logger.debug(f"登录失败:{json.loads(resp)['error']}")
-                sys.exit()
-            self.logger.debug(resp)
-            is_succ = await self.check_login()
-            if is_succ:
-                print_colour('登录成功!', colour='green')
-            else:
-                print_colour('登录失败!', colour='red')
-                sys.exit()
+                'accept-encoding': 'gzip, deflate, br',
+                'Host': 'www.zhihu.com',
+                'Referer': 'https://www.zhihu.com/',
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
+                            '(KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36',
+                'content-type': 'application/x-www-form-urlencoded',
+                'x-zse-83': '3_2.0',
+                'x-xsrftoken': xsrf
+            }
+        
+        # 获取验证码后登录，验证码错误则重新登录
+        while True:
+            captcha = await self._get_captcha()
+            timestamp = int(time.time() * 1000)
+            login_data.update({
+                'captcha': captcha,
+                'timestamp': timestamp,
+                'signature': self._get_signature(timestamp, login_data)
+            })
+            data = self._encrypt(login_data)
+            url = 'https://www.zhihu.com/api/v3/oauth/sign_in'
+            async with self.post(url, data=data, headers=headers) as r:
+                resp = await r.text()
+                if 'error' in resp:
+                    print_colour(json.loads(resp)['error'], 'red')
+                    self.logger.debug(f"登录失败:{json.loads(resp)['error']}")
+                    continue
+                self.logger.debug(resp)
+                is_succ = await self.check_login()
+                if is_succ:
+                    print_colour('登录成功!', colour='green')
+                    break
+                else:
+                    print_colour('登录失败!', colour='red')
+                    sys.exit()
 
     async def _get_captcha(self) -> str:
         """
