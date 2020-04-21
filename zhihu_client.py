@@ -102,7 +102,7 @@ class ZhihuClient(aiohttp.ClientSession):
                 is_succ = await self.check_login()
                 if is_succ:
                     print_colour('登录成功!', colour='green')
-                    break
+                    return
                 else:
                     print_colour('登录失败!', colour='red')
                     sys.exit()
