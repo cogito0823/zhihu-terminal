@@ -9,7 +9,6 @@ from utils import SpiderBaseclass
 
 class ArticleSpider(SpiderBaseclass):
     """文章相关"""
-
     async def get_recommend_article(self) -> dict:
         """
         获取推荐文章
@@ -17,7 +16,7 @@ class ArticleSpider(SpiderBaseclass):
         """
         url = 'https://www.zhihu.com'
         for _ in range(2):
-            async with self.client.get(url) as r:
+            async with self.client.get(url, headers = self.client.headers) as r:
                 resp = await r.text()
                 session_token = re.findall(r'session_token=(.*?)\&', resp)
             if session_token:
@@ -34,7 +33,7 @@ class ArticleSpider(SpiderBaseclass):
             'action': 'down',
             'after_id': '5',
         }
-        async with self.client.get(url, params=data) as r:
+        async with self.client.get(url, params=data, headers = self.client.headers) as r:
             result = await r.json()
         self.logger.debug(result)
         return result
@@ -51,7 +50,7 @@ class ArticleSpider(SpiderBaseclass):
         data = {
             'type': typ
         }
-        r = await self.client.post(url, json=data)
+        r = await self.client.post(url, json=data, headers = self.client.headers)
         result = await r.json()
         self.logger.debug(result)
         return result
@@ -65,9 +64,9 @@ class ArticleSpider(SpiderBaseclass):
         """
         url = f'https://www.zhihu.com/api/v4/answers/{uid}/thankers'
         if delete:
-            r = await self.client.delete(url)
+            r = await self.client.delete(url, headers = self.client.headers)
         else:
-            r = await self.client.post(url)
+            r = await self.client.post(url, headers = self.client.headers)
         result = await r.json()
         self.logger.debug(result)
         return result
@@ -80,7 +79,7 @@ class ArticleSpider(SpiderBaseclass):
         :return:
         """
         url = f'https://www.zhihu.com/question/{question_id}/answer/{uid}'
-        r = await self.client.get(url)
+        r = await self.client.get(url, headers = self.client.headers)
         resp = await r.text()
         self.logger.debug(resp)
         return resp
@@ -108,7 +107,7 @@ class ArticleSpider(SpiderBaseclass):
             'sort_by': 'default',
             'platform': 'desktop',
         }
-        r = await self.client.get(url, params=params)
+        r = await self.client.get(url, params=params, headers = self.client.headers)
         result = await r.json()
         self.logger.debug(result)
         return result
@@ -121,7 +120,7 @@ class ArticleSpider(SpiderBaseclass):
         :param limit:
         :return:
         """
-        r = await self.client.get(url)
+        r = await self.client.get(url, headers = self.client.headers)
         result = await r.json()
         self.logger.debug(result)
         return result
