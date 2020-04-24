@@ -425,7 +425,7 @@ async def main():
                 USER = input('请输入手机号(输入"back"可以返回上级选择)：')
                 if USER == 'back':
                     continue
-                PASSWORD = input('请输入密码')
+                PASSWORD = input('请输入密码: ')
             else:
                 print('输入有误！')
                 continue
