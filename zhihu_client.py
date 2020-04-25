@@ -18,7 +18,7 @@ from PIL import Image
 from urllib.parse import urlencode
 from utils import print_colour
 from log import get_logger
-from setting import COOKIE_FILE
+from setting import COOKIE_FILE, Headers, User_Agent
 import detect_captcha
 
 
@@ -29,14 +29,7 @@ class ZhihuClient(aiohttp.ClientSession):
         super().__init__(*args, **kwargs)
         self.user = user
         self.password = password
-        headers = {
-            'Host': 'www.zhihu.com',
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
-                          '(KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36',
-            #'Connection': 'Keep-Alive',
-            'Referer': 'https://www.zhihu.com/',
-            'accept-encoding': 'gzip, deflate'
-        }
+        headers = Headers
         self._default_headers = headers
         self.logger = get_logger()
         self.cookie_file = COOKIE_FILE or '/tmp/cookies.pick'
@@ -74,8 +67,7 @@ class ZhihuClient(aiohttp.ClientSession):
                 'accept-encoding': 'gzip, deflate, br',
                 'Host': 'www.zhihu.com',
                 'Referer': 'https://www.zhihu.com/',
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
-                            '(KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36',
+                'User-Agent': User_Agent,
                 'content-type': 'application/x-www-form-urlencoded',
                 'x-zse-83': '3_2.0',
                 'x-xsrftoken': xsrf
@@ -208,7 +200,7 @@ if __name__ == '__main__':
     from setting import USER, PASSWORD
 
     async def test():
-        client = ZhihuClient(user=USER, password=PASSWORD)
+        client = ZhihuClient(user=USER, password=PASSWORD, headers=Headers, trust_env=True)
         await client.login(load_cookies=False)
         await client.close()
     asyncio.run(test())

@@ -19,6 +19,7 @@ from utils import get_com_func
 from setting import USER as default_username
 from setting import PASSWORD as default_password
 from setting import SAVE_DIR
+from setting import Headers
 
 
 def help_main():
@@ -404,7 +405,7 @@ async def login(user, password, whether_load_cookies = True):
     :param password:
     :return:
     """
-    client = ZhihuClient(user, password)
+    client = ZhihuClient(user, password, headers = Headers, trust_env=True)
     load_cookies = False
     if whether_load_cookies and os.path.exists(client.cookie_file):
         # 如果cookie缓存存在优先读取缓存
