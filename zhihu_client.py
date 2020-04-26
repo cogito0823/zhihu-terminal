@@ -18,7 +18,7 @@ from PIL import Image
 from urllib.parse import urlencode
 from utils import print_colour
 from log import get_logger
-from setting import COOKIE_FILE,proxy,appKey
+from setting import COOKIE_FILE,proxy
 from setting import proxy_headers,Headers
 import detect_captcha
 from aiohttp import TCPConnector
@@ -32,13 +32,13 @@ class ZhihuClient(aiohttp.ClientSession):
         self.password = password
         headers = {
             'Host': 'www.zhihu.com',
-            "Proxy-Authorization": 'Basic '+ appKey,
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
                           '(KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36',
             #'Connection': 'Keep-Alive',
             'Referer': 'https://www.zhihu.com/',
             'accept-encoding': 'gzip, deflate'
         }
+        headers.update(proxy_headers)
         self._default_headers = headers
         self.logger = get_logger()
         self.cookie_file = COOKIE_FILE or '/tmp/cookies.pick'
@@ -75,7 +75,6 @@ class ZhihuClient(aiohttp.ClientSession):
         headers = {
                 'accept-encoding': 'gzip, deflate, br',
                 'Host': 'www.zhihu.com',
-                "Proxy-Authorization": 'Basic '+ appKey,
                 'Referer': 'https://www.zhihu.com/',
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
                             '(KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36',
@@ -83,7 +82,7 @@ class ZhihuClient(aiohttp.ClientSession):
                 'x-zse-83': '3_2.0',
                 'x-xsrftoken': xsrf
             }
-        
+        headers.update(proxy_headers)
         # 获取验证码后登录，验证码错误则重新登录
         while True:
             captcha = await self._get_captcha()
@@ -211,7 +210,7 @@ if __name__ == '__main__':
     from setting import USER, PASSWORD
 
     async def test():
-        client = ZhihuClient(user=USER, password=PASSWORD, headers=Headers, connector=TCPConnector(ssl=False))
+        client = ZhihuClient(user=USER, password=PASSWORD, connector=TCPConnector(ssl=False))
         await client.login(load_cookies=False)
         await client.close()
     asyncio.run(test())
