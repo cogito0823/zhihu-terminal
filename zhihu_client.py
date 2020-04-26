@@ -30,7 +30,8 @@ class ZhihuClient(aiohttp.ClientSession):
         self.user = user
         self.password = password
         headers = Headers
-        self._default_headers = headers
+        self.headers = headers
+
         self.logger = get_logger()
         self.cookie_file = COOKIE_FILE or '/tmp/cookies.pick'
 
