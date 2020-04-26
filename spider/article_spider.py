@@ -5,7 +5,7 @@ import re
 import asyncio
 from zhihu_client import ZhihuClient
 from utils import SpiderBaseclass
-
+from setting import proxy
 
 class ArticleSpider(SpiderBaseclass):
     """文章相关"""
@@ -17,7 +17,7 @@ class ArticleSpider(SpiderBaseclass):
         """
         url = 'https://www.zhihu.com'
         for _ in range(2):
-            async with self.client.get(url) as r:
+            async with self.client.get(url, proxy=proxy) as r:
                 resp = await r.text()
                 session_token = re.findall(r'session_token=(.*?)\&', resp)
             if session_token:
@@ -34,7 +34,7 @@ class ArticleSpider(SpiderBaseclass):
             'action': 'down',
             'after_id': '5',
         }
-        async with self.client.get(url, params=data) as r:
+        async with self.client.get(url, params=data, proxy=proxy) as r:
             result = await r.json()
         self.logger.debug(result)
         return result
@@ -51,7 +51,7 @@ class ArticleSpider(SpiderBaseclass):
         data = {
             'type': typ
         }
-        r = await self.client.post(url, json=data)
+        r = await self.client.post(url, json=data, proxy=proxy)
         result = await r.json()
         self.logger.debug(result)
         return result
@@ -65,9 +65,9 @@ class ArticleSpider(SpiderBaseclass):
         """
         url = f'https://www.zhihu.com/api/v4/answers/{uid}/thankers'
         if delete:
-            r = await self.client.delete(url)
+            r = await self.client.delete(url, proxy=proxy)
         else:
-            r = await self.client.post(url)
+            r = await self.client.post(url, proxy=proxy)
         result = await r.json()
         self.logger.debug(result)
         return result
@@ -80,7 +80,7 @@ class ArticleSpider(SpiderBaseclass):
         :return:
         """
         url = f'https://www.zhihu.com/question/{question_id}/answer/{uid}'
-        r = await self.client.get(url)
+        r = await self.client.get(url, proxy=proxy)
         resp = await r.text()
         self.logger.debug(resp)
         return resp
@@ -108,7 +108,7 @@ class ArticleSpider(SpiderBaseclass):
             'sort_by': 'default',
             'platform': 'desktop',
         }
-        r = await self.client.get(url, params=params)
+        r = await self.client.get(url, params=params, proxy=proxy)
         result = await r.json()
         self.logger.debug(result)
         return result
@@ -121,7 +121,7 @@ class ArticleSpider(SpiderBaseclass):
         :param limit:
         :return:
         """
-        r = await self.client.get(url)
+        r = await self.client.get(url, proxy=proxy)
         result = await r.json()
         self.logger.debug(result)
         return result

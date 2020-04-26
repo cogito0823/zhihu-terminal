@@ -1,5 +1,5 @@
 from utils import SpiderBaseclass
-
+from setting import proxy
 
 class CommentSpider(SpiderBaseclass):
     """评论爬取"""
@@ -20,7 +20,7 @@ class CommentSpider(SpiderBaseclass):
             'status': 'open',
         }
 
-        r = await self.client.get(url, params=params)
+        r = await self.client.get(url, params=params, proxy=proxy)
         self.logger.debug(await r.text())
         result = await r.json()
         self.logger.debug(result)
@@ -33,7 +33,7 @@ class CommentSpider(SpiderBaseclass):
         :param typ:
         :return:
         """
-        r = await self.client.get(url)
+        r = await self.client.get(url, proxy=proxy)
         self.logger.debug(await r.text())
         result = await r.json()
         self.logger.debug(result)
@@ -48,9 +48,9 @@ class CommentSpider(SpiderBaseclass):
         """
         url = f'https://www.zhihu.com/api/v4/comments/{uid}/actions/like'
         if delete:
-            r = await self.client.delete(url)
+            r = await self.client.delete(url, proxy=proxy)
         else:
-            r = await self.client.post(url)
+            r = await self.client.post(url, proxy=proxy)
         result = await r.json()
         self.logger.debug(result)
         return result

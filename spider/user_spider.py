@@ -1,5 +1,5 @@
 from utils import SpiderBaseclass
-
+from setting import proxy
 
 class UserSpider(SpiderBaseclass):
     """用户信息爬取"""
@@ -13,7 +13,7 @@ class UserSpider(SpiderBaseclass):
               'messages_count;draft_count;following_question_count;account_status,is_bind_phone,' \
               'is_force_renamed,email,renamed_fullname;ad_type'
 
-        async with self.client.get(url) as resp:
+        async with self.client.get(url, proxy=proxy) as resp:
             result = await resp.json()
             self.logger.debug(result)
         return result

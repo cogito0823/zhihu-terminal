@@ -18,9 +18,10 @@ from PIL import Image
 from urllib.parse import urlencode
 from utils import print_colour
 from log import get_logger
-from setting import COOKIE_FILE
+from setting import COOKIE_FILE,proxy,appKey
+from setting import proxy_headers,Headers
 import detect_captcha
-
+from aiohttp import TCPConnector
 
 class ZhihuClient(aiohttp.ClientSession):
     """扩展ClientSession"""
@@ -31,6 +32,7 @@ class ZhihuClient(aiohttp.ClientSession):
         self.password = password
         headers = {
             'Host': 'www.zhihu.com',
+            "Proxy-Authorization": 'Basic '+ appKey,
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
                           '(KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36',
             #'Connection': 'Keep-Alive',
@@ -73,6 +75,7 @@ class ZhihuClient(aiohttp.ClientSession):
         headers = {
                 'accept-encoding': 'gzip, deflate, br',
                 'Host': 'www.zhihu.com',
+                "Proxy-Authorization": 'Basic '+ appKey,
                 'Referer': 'https://www.zhihu.com/',
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
                             '(KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36',
@@ -92,7 +95,7 @@ class ZhihuClient(aiohttp.ClientSession):
             })
             data = self._encrypt(login_data)
             url = 'https://www.zhihu.com/api/v3/oauth/sign_in'
-            async with self.post(url, data=data, headers=headers) as r:
+            async with self.post(url, data=data, headers=headers, proxy=proxy) as r:
                 resp = await r.text()
                 if 'error' in resp:
                     print_colour(json.loads(resp)['error'], 'red')
@@ -117,11 +120,11 @@ class ZhihuClient(aiohttp.ClientSession):
         """
 
         url = 'https://www.zhihu.com/api/v3/oauth/captcha?lang=en'
-        async with self.get(url) as r:
+        async with self.get(url, proxy=proxy) as r:
             resp = await r.text()
             show_captcha = re.search(r'true', resp)
         if show_captcha:
-            async with self.put(url) as r:
+            async with self.put(url, proxy=proxy) as r:
                 resp = await r.text()
             json_data = json.loads(resp)
             img_base64 = json_data['img_base64'].replace(r'\n', '')
@@ -149,7 +152,7 @@ class ZhihuClient(aiohttp.ClientSession):
             else:
                 capt = input('请输入图片里的验证码：')
             # 这里必须先把参数 POST 验证码接口
-            await self.post(url, data={'input_text': capt})
+            await self.post(url, data={'input_text': capt}, proxy=proxy)
             return capt
         return ''
 
@@ -160,7 +163,7 @@ class ZhihuClient(aiohttp.ClientSession):
         :return: bool
         """
         url = 'https://www.zhihu.com/'
-        async with self.get(url, allow_redirects=False) as r:
+        async with self.get(url, allow_redirects=False, proxy=proxy) as r:
             if r.status == 200:
                 self.cookie_jar.save(self.cookie_file)
                 self.logger.debug(f'保存cookies到->{self.cookie_file}')
@@ -176,7 +179,7 @@ class ZhihuClient(aiohttp.ClientSession):
         从登录页面获取 xsrf
         :return: str
         """
-        async with self.get('https://www.zhihu.com/', allow_redirects=False) as r:
+        async with self.get('https://www.zhihu.com/', allow_redirects=False, proxy=proxy) as r:
             self.logger.debug('尝试获取xsrf token')
             if r.cookies.get('_xsrf'):
                 self.logger.debug(f'获取成功{r.cookies.get("_xsrf").value}')
@@ -208,7 +211,7 @@ if __name__ == '__main__':
     from setting import USER, PASSWORD
 
     async def test():
-        client = ZhihuClient(user=USER, password=PASSWORD)
+        client = ZhihuClient(user=USER, password=PASSWORD, headers=Headers, connector=TCPConnector(ssl=False))
         await client.login(load_cookies=False)
         await client.close()
     asyncio.run(test())
