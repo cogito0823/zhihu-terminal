@@ -20,7 +20,6 @@ from aiohttp import TCPConnector
 from setting import USER as default_username
 from setting import PASSWORD as default_password
 from setting import SAVE_DIR
-from setting import Headers
 from setting import COOKIE_FILE,proxy
 
 

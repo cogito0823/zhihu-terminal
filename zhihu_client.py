@@ -19,7 +19,7 @@ from urllib.parse import urlencode
 from utils import print_colour
 from log import get_logger
 from setting import COOKIE_FILE,proxy
-from setting import proxy_headers,Headers
+from setting import proxy_headers
 import detect_captcha
 from aiohttp import TCPConnector
 
