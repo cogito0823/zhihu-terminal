@@ -249,7 +249,6 @@ class DataExtractor(ArticleSpider, CommentSpider, UserSpider):
 
     async def get_article_by_question(self, question_id, offset: int = 0, limit: int = 3) -> tuple:
         """
-
         :param question_id:
         :param offset:
         :param limit:
@@ -263,7 +262,6 @@ class DataExtractor(ArticleSpider, CommentSpider, UserSpider):
 
     async def get_article_by_question_url(self, url):
         """
-
         :param url:
         :return:
         """
