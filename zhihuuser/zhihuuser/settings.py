@@ -14,12 +14,13 @@ BOT_NAME = 'zhihuuser'
 SPIDER_MODULES = ['zhihuuser.spiders']
 NEWSPIDER_MODULE = 'zhihuuser.spiders'
 
+from zhihuuser.ss import auth
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'zhihuuser (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -39,11 +40,19 @@ ROBOTSTXT_OBEY = True
 #TELNETCONSOLE_ENABLED = False
 
 # Override the default request headers:
-#DEFAULT_REQUEST_HEADERS = {
-#   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-#   'Accept-Language': 'en',
-#}
-
+DEFAULT_REQUEST_HEADERS = {
+    # 'Host': 'www.zhihu.com',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
+                    '(KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36',
+    # 'authorization': 'oauth c3cef7c66a1843f8b3a9e6a1e3160e20',
+    # 'Connection': 'Keep-Alive',
+    'Referer': 'https://www.zhihu.com/',
+    'accept-encoding': 'gzip, deflate'
+}
+HTTPERROR_ALLOWED_CODES = [401,407,403]
+DOWNLOAD_TIMEOUT = 15
+#RETRY_ENABLED = False
+REDIRECT_ENABLED = False
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
@@ -52,9 +61,12 @@ ROBOTSTXT_OBEY = True
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    'zhihuuser.middlewares.ZhihuuserDownloaderMiddleware': 543,
-#}
+DOWNLOADER_MIDDLEWARES = {
+   'zhihuuser.middlewares.ProxyMiddleware': 100,
+}
+
+# DOWNLOAD_DELAY = 0.05
+# RANDOMIZE_DOWNLOAD_DELAY = True
 
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html
