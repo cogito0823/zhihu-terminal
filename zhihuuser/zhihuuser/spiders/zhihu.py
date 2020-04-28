@@ -49,8 +49,8 @@ class ZhihuSpider(Spider):
         yield item
     
     def parse_page(self,response):
-        result = json.loads(response.text)
-        follower_count = result['follower_count']
+        #result = json.loads(response.text)
+        #follower_count = result['follower_count']
         offset_list = [0,20,40,60,80]
         for i in offset_list:
             yield Request(self.follows_url.format(user=self.start_user, include=self.follows_query, offset=i, limit=20),
