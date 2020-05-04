@@ -50,9 +50,9 @@ DEFAULT_REQUEST_HEADERS = {
     'accept-encoding': 'gzip, deflate'
 }
 HTTPERROR_ALLOWED_CODES = [401,407,403]
-DOWNLOAD_TIMEOUT = 15
+DOWNLOAD_TIMEOUT = 5
 #RETRY_ENABLED = False
-REDIRECT_ENABLED = False
+#REDIRECT_ENABLED = False
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {

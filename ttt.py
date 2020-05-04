@@ -20,6 +20,8 @@ from setting import proxy_headers
 import detect_captcha
 from aiohttp import TCPConnector
 
+count = 0
+
 headers = {
             'Host': 'www.zhihu.com',
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
@@ -68,45 +70,38 @@ async def parse_page(session):
         pages = []
         for i in offset_list:
             try:
-                async with session.get(follows_url.format(user=start_user, include=follows_query, offset=i, limit=20), headers=headers, proxy=proxy, timeout=6) as resp:
+                async with session.get(follows_url.format(user=start_user, include=follows_query, offset=i, limit=20), headers=headers, proxy=proxy, timeout=16) as resp:
                     page = await resp.text()
                     pages.append(page)
             except Exception as e:
                 print(e)
         return pages
-                
+
+async def get_user(session, result1):
+    
+    
+    try:
+        await asyncio.sleep(2)
+        async with session.get(user_url.format(user=result1.get('url_token'),include=user_query), headers=headers, proxy=proxy, timeout=6) as resp:
+            text =  await resp.text()
+            print(text)
+            global count
+            print(count)
+            count = count + 1
+    except Exception as e:
+        print(e)       
+               
 async def parse_follows(session,response):
-        result1 = json.loads(response)
-        # if 'paging' in result1.keys() and result1.get('paging').get('is_end') == False:
-        #     next_page = result1.get('paging').get('next')
-        #     yield Request(next_page, callback=parse_follows)
-        users = []
-        i = 0
-        if 'data' in result1.keys():
-            for result1 in result1.get('data'):
-                try:
-                    async with session.get(user_url.format(user=result1.get('url_token'),include=user_query), headers=headers, proxy=proxy, timeout=6) as resp:
-                        user = await resp.text()
-                        users.append(user)
-                        print(i)
-                        i += 1
-                except Exception as e:
-                    print(e)
-        return users
+        result = json.loads(response)
+        if 'data' in result.keys():
+            users = [get_user(session, result1) for result1 in result.get('data')]
+            return await asyncio.wait(users)
       
-async def dd(session,page):
-    users = await parse_follows(session,page)
-    tasks = [parse_user(session,user) for user in users]
-    await asyncio.wait(tasks)
 async def main():
     async with aiohttp.ClientSession(connector=TCPConnector(ssl=False)) as session:
-        #await parse_user(session,user)
         pages = await parse_page(session)
-        taskss = [dd(session,page) for page in pages]
-        await asyncio.wait(taskss)
-            
-            # for user in users:
-            #     await parse_user(session,user)
+        taskss = [parse_follows(session,page) for page in pages]
+        return await asyncio.wait(taskss)
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
     loop.run_until_complete(main())

@@ -107,12 +107,12 @@ class ZhihuuserDownloaderMiddleware(object):
 
 class ProxyMiddleware(object):
     def process_request(self, request, spider):
-        # request.meta['proxy'] = 'http://forward.xdaili.cn:80'
-        # auth = self.tt()
-        # request.headers['Proxy-Authorization'] = auth
+        request.meta['proxy'] = 'http://forward.xdaili.cn:80'
+        auth = self.tt()
+        request.headers['Proxy-Authorization'] = auth
         
-        request.meta['proxy'] = 'http://secondtransfer.moguproxy.com:9001'
-        request.headers['Proxy-Authorization'] = 'Basic dno1SjRhbnJuTFJyZ2ZLbzpHOGVqRkhzMzNKajFzd21T'
+        # request.meta['proxy'] = 'http://secondtransfer.moguproxy.com:9001'
+        # request.headers['Proxy-Authorization'] = 'Basic dno1SjRhbnJuTFJyZ2ZLbzpHOGVqRkhzMzNKajFzd21T'
         
     def tt(self):
         _version = sys.version_info
@@ -131,15 +131,14 @@ class ProxyMiddleware(object):
     def process_exception(self, request, exception, spider):
         # 出现异常时（超时）使用代理
         print("\n出现异常，正在使用代理重试....\n")
-        # time.sleep(2)
-        # request.meta['proxy'] = 'http://forward.xdaili.cn:80'
-        # auth = self.tt()
-        # request.headers['Proxy-Authorization'] = auth
-        # return request
-    
-        request.meta['proxy'] = 'http://secondtransfer.moguproxy.com:9001'
-        request.headers['Proxy-Authorization'] = 'Basic dno1SjRhbnJuTFJyZ2ZLbzpHOGVqRkhzMzNKajFzd21T'
+        request.meta['proxy'] = 'http://forward.xdaili.cn:80'
+        auth = self.tt()
+        request.headers['Proxy-Authorization'] = auth
         return request
+    
+        # request.meta['proxy'] = 'http://secondtransfer.moguproxy.com:9001'
+        # request.headers['Proxy-Authorization'] = 'Basic dno1SjRhbnJuTFJyZ2ZLbzpHOGVqRkhzMzNKajFzd21T'
+        # return request
 
 
 
