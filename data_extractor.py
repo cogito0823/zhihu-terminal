@@ -91,6 +91,73 @@ class DataExtractor(ArticleSpider, CommentSpider, UserSpider):
         self.logger.debug(output)
         return output
 
+    async def get_aten_article(self) -> list:
+        """
+        获取推荐文章
+        :return:
+        """
+        result = await super().get_aten_article()
+        output = []
+        for d in result['data']:  # 提取用到的数据
+            target = d['target']
+            if target['type'] == 'question':
+                continue
+            author = target['author']
+            question = target.get('question')
+            playlist = target.get('thumbnail_extra_info', {}).get('playlist')
+            article_info = {
+                'author': {  # 作者信息
+                    'name': author['name'],
+                    'headline': author.get('headline'),
+                    'head': author['avatar_url'],
+                    'gender': author.get('gender'),
+                    'url': author.get('url'),
+                },
+                'excerpt': target.get('excerpt_new') or target.get('excerpt'),
+                'content': target['content'],
+                'voteup_count': target.get('voteup_count', target.get('vote_count')),  # 赞同数
+                'visited_count': target.get('visited_count'),
+                'thanks_count': target.get('thanks_count', 0),
+                'comment_count': target['comment_count'],
+                'id': str(target['id']),
+                'type': target['type'],
+                'actors': d['actors'],
+                'action_text_tpl': d['action_text_tpl'],
+                'created_time': d['created_time'],
+                'updated_time': d['updated_time'],
+            }
+            # # 如果type是zvideo，那么voteup_count对应的属性名是vote_count,这里把属性名修改过来
+            if target['type'] == 'zvideo' and playlist:
+                article_info['content'] += f'\n{playlist.get("hd", {}).get("url", "")}'
+                article_info['excerpt'] = '**video**'
+            #     article_info['voteup_count'] = target.get('vote_count')
+            if question:
+                question = {
+                    'author': {
+                        'name': question['author']['name'],
+                        'headline': question['author'].get('headline'),
+                        'head': question['author'].get('head'),
+                        'gender': question['author'].get('gender'),
+                        'url': question['author'].get('url'),
+                    },
+                    'title': question['title'],
+                    'url': question['url'],
+                    'id': str(question['id']),
+                    'type': 'normal',
+                }
+            else:
+                question = {
+                    'title': target['title'],
+                    'url': target.get('url'),
+                    'type': 'market',
+                    'id': '',
+                    'author': target['author']
+                }
+            article_info['question'] = question
+            output.append(article_info)
+        self.logger.debug(output)
+        return output
+
     def extract_comments(self, result: dict) -> tuple:
         """
         提取评论

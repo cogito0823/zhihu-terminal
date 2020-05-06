@@ -5,6 +5,7 @@ from zhihu_client import ZhihuClient
 from data_extractor import DataExtractor
 
 from print_beautify import print_recommend_article
+from print_beautify import print_aten_article
 from print_beautify import print_article_content
 from print_beautify import print_comments
 from print_beautify import print_question
@@ -12,6 +13,7 @@ from print_beautify import print_vote_thank
 from print_beautify import print_vote_comments
 from print_beautify import print_logo
 from print_beautify import print_save
+
 
 from utils import print_colour
 from utils import get_com_func
@@ -369,6 +371,61 @@ async def deal_remd(spider):
             print_colour('输入有误!', 'red')
             continue
 
+async def deal_aten(spider):
+    """
+    处理推荐文章命令
+    :param spider:
+    :return:
+    """
+    is_print = True
+    while True:
+        if is_print:
+            aten_articles = await spider.get_aten_article()
+            ids = [d.get('id') for d in aten_articles]
+            print_aten_article(aten_articles)
+            is_print = False
+        print_colour('', 'yellow')
+        aten_cmd = input(help_recommend()).lower()
+        aten_cmd = aten_cmd.split(':')
+        if not aten_cmd:
+            print_colour('输入有误!', 'red')
+            continue
+        app_exit(aten_cmd[0])
+        if aten_cmd[0] == 'f':
+            is_print = True
+            continue
+        elif aten_cmd[0] == 'r':
+            print_aten_article(aten_articles)
+            continue
+        elif aten_cmd[0] == 'read':
+            if len(aten_cmd) != 2:
+                print_colour('输入有误!', 'red')
+                continue
+            if aten_cmd[1] not in ids:
+                print_colour('输入id有误! 请检查id是否在此页', 'red')
+                continue
+            output = [d for d in aten_articles if d['id'] == aten_cmd[1]][0]
+            print_article_content(output)
+            await deal_article(spider, output)
+            continue
+        elif aten_cmd[0] == 'question':
+            question_ids = [d.get('question').get('id') for d in aten_articles]
+            if len(aten_cmd) != 2:
+                print_colour('输入有误!', 'red')
+                continue
+            if aten_cmd[1] not in question_ids:
+                print_colour('输入id有误!', 'red')
+                continue
+            assert len(ids) == len(question_ids)
+            id_map = dict(zip(question_ids, ids))
+            uid = id_map[aten_cmd[1]]
+            await deal_question(spider, aten_cmd[1], uid)
+            continue
+        elif aten_cmd[0] == 'back':
+            break
+        else:
+            print_colour('输入有误!', 'red')
+            continue
 
 async def run(client):
     spider = DataExtractor(client)
@@ -385,9 +442,7 @@ async def run(client):
         if cmd == 'remd':
             await deal_remd(spider)
         elif cmd == 'aten':
-            # todo 获取关注动态
-            print_colour('功能还在开发中...', 'red')
-            continue
+            await deal_aten(spider)
         else:
             print_colour('输入有误!', 'red')
             continue

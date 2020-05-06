@@ -141,8 +141,8 @@ class ZhihuClient(aiohttp.ClientSession):
             # img_thread = threading.Thread(target=img.show, daemon=True)
             # img_thread.start()
             # TODO 验证码自动识别实现
-            loop = asyncio.get_running_loop()
-            loop.run_in_executor(None, img.show)
+            #loop = asyncio.get_running_loop()
+            # loop.run_in_executor(None, img.show)
             whether_use_detect_aptcha =input('是否使用打码平台(y|n): ')
             if whether_use_detect_aptcha == 'y':
                     # 这里可自行集成验证码识别模块
