@@ -379,10 +379,10 @@ async def deal_aten(spider):
     """
     is_next = False
     is_print = True
-    paging = []
+    paging = {}
     while True:
         if is_print:
-            if is_next: 
+            if is_next:
                 next_url = paging['next']
                 aten_articles = await spider.get_aten_article(next_url)
                 paging = aten_articles.pop(-1)
