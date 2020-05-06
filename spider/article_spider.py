@@ -38,7 +38,7 @@ class ArticleSpider(SpiderBaseclass):
         self.logger.debug(result)
         return result
 
-    async def get_aten_article(self) -> dict:
+    async def get_aten_article(self, *next_url) -> dict:
         """
         获取推荐文章
         :return:
@@ -53,7 +53,10 @@ class ArticleSpider(SpiderBaseclass):
                 break
         else:
             raise AssertionError('获取session_token失败')
-        url = 'https://www.zhihu.com/api/v3/moments?'
+        if next_url:
+            url = next_url[0]
+        else:
+            url = 'https://www.zhihu.com/api/v3/moments?'
         data = {
             'desktop': 'true',
             'limit': '6',

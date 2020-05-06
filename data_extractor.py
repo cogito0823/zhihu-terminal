@@ -91,16 +91,21 @@ class DataExtractor(ArticleSpider, CommentSpider, UserSpider):
         self.logger.debug(output)
         return output
 
-    async def get_aten_article(self) -> list:
+    async def get_aten_article(self, *next_url) -> list:
         """
         获取推荐文章
         :return:
         """
-        result = await super().get_aten_article()
+        if next_url:  
+            result = await super().get_aten_article(next_url[0])
+        else:
+            result = await super().get_aten_article()
         output = []
         for d in result['data']:  # 提取用到的数据
             target = d['target']
             if target['type'] == 'question':
+                continue
+            if target['type'] == 'roundtable':
                 continue
             author = target['author']
             question = target.get('question')
@@ -155,6 +160,8 @@ class DataExtractor(ArticleSpider, CommentSpider, UserSpider):
                 }
             article_info['question'] = question
             output.append(article_info)
+        paging = result['paging']
+        output.append(paging)
         self.logger.debug(output)
         return output
 

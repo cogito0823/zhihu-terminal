@@ -377,13 +377,24 @@ async def deal_aten(spider):
     :param spider:
     :return:
     """
+    is_next = False
     is_print = True
+    paging = []
     while True:
         if is_print:
-            aten_articles = await spider.get_aten_article()
-            ids = [d.get('id') for d in aten_articles]
-            print_aten_article(aten_articles)
+            if is_next: 
+                next_url = paging['next']
+                aten_articles = await spider.get_aten_article(next_url)
+                paging = aten_articles.pop(-1)
+                ids = [d.get('id') for d in aten_articles]
+                print_aten_article(aten_articles)
+            else:
+                aten_articles = await spider.get_aten_article()
+                paging = aten_articles.pop(-1)
+                ids = [d.get('id') for d in aten_articles]
+                print_aten_article(aten_articles)
             is_print = False
+            is_next = False
         print_colour('', 'yellow')
         aten_cmd = input(help_recommend()).lower()
         aten_cmd = aten_cmd.split(':')
@@ -392,10 +403,21 @@ async def deal_aten(spider):
             continue
         app_exit(aten_cmd[0])
         if aten_cmd[0] == 'f':
+            if paging.get('is_end'):
+                print_colour('已是第一页!', 'red')
+                continue
             is_print = True
+            is_next = True
             continue
         elif aten_cmd[0] == 'r':
             print_aten_article(aten_articles)
+            continue
+        elif aten_cmd[0] == 'n':
+            if paging.get('is_end'):
+                print_colour('已是第一页!', 'red')
+                continue
+            is_print = True
+            is_next = True
             continue
         elif aten_cmd[0] == 'read':
             if len(aten_cmd) != 2:
