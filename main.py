@@ -176,7 +176,7 @@ async def deal_comments(spider, result, paging):
             if paging.get('is_end'):
                 print_colour('已是最后一页!', 'red')
                 continue
-            url = paging['next'].replace('https://www.zhihu.com/', 'https://www.zhihu.com/api/v4/')
+            url = paging['next']
             result, paging = await spider.get_comments_by_url(url)
             print_comments(result)
             continue
@@ -184,7 +184,7 @@ async def deal_comments(spider, result, paging):
             if paging.get('is_start'):
                 print_colour('已是第一页!', 'red')
                 continue
-            url = paging['previous'].replace('https://www.zhihu.com/', 'https://www.zhihu.com/api/v4/')
+            url = paging['previous']
             result, paging = await spider.get_comments_by_url(url)
             print_comments(result)
             continue
@@ -373,7 +373,7 @@ async def deal_remd(spider):
 async def run(client):
     spider = DataExtractor(client)
     self_info = await spider.get_self_info()
-    print_colour(f'hello {self_info["name"]} 欢迎使用terminal-zhihu!', 'ultramarine')
+    print_colour(f'hello {self_info["name"]} 欢迎使用知乎~', 'ultramarine')
     flag = True
     while flag:
         print_colour('', 'yellow')
