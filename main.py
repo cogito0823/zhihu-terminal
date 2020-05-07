@@ -404,9 +404,8 @@ async def deal_aten(spider):
             continue
         app_exit(aten_cmd[0])
         if aten_cmd[0] == 'f':
-            if paging.get('is_end'):
-                print_colour('已是第一页!', 'red')
-                continue
+            is_print = True
+            continue
             is_print = True
             is_next = True
             continue
