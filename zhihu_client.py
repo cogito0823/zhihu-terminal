@@ -129,7 +129,6 @@ class ZhihuClient(aiohttp.ClientSession):
             img_base64 = json_data['img_base64'].replace(r'\n', '')
             with open(f'./captcha.jpg', 'wb') as f:
                 f.write(base64.b64decode(img_base64))
-            img = Image.open(f'./captcha.jpg')
             # if lang == 'cn':
             #     import matplotlib.pyplot as plt
             #     plt.imshow(img)
