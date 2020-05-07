@@ -406,9 +406,6 @@ async def deal_aten(spider):
         if aten_cmd[0] == 'f':
             is_print = True
             continue
-            is_print = True
-            is_next = True
-            continue
         elif aten_cmd[0] == 'r':
             print_aten_article(aten_articles)
             continue
