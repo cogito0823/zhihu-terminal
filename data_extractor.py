@@ -102,10 +102,14 @@ class DataExtractor(ArticleSpider, CommentSpider, UserSpider):
             result = await super().get_aten_article()
         output = []
         for d in result['data']:  # 提取用到的数据
+            if not 'target' in d.keys():
+                continue
             target = d['target']
             if target['type'] == 'question':
                 continue
             if target['type'] == 'roundtable':
+                continue
+            if target['type'] == 'column':
                 continue
             author = target['author']
             question = target.get('question')
