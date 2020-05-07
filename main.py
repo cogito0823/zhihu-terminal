@@ -1,6 +1,7 @@
 import os
 import sys
 import asyncio
+from aiohttp import ClientTimeout
 from zhihu_client import ZhihuClient
 from data_extractor import DataExtractor
 
@@ -483,7 +484,8 @@ async def login(user, password, whether_load_cookies = True):
     :param password:
     :return:
     """
-    client = ZhihuClient(user, password, connector=TCPConnector(ssl=False))
+    timeout = ClientTimeout(total=10)
+    client = ZhihuClient(user, password, timeout=timeout, connector=TCPConnector(ssl=False))
     load_cookies = False
     if whether_load_cookies and os.path.exists(client.cookie_file):
         # 如果cookie缓存存在优先读取缓存
