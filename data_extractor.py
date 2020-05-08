@@ -37,6 +37,8 @@ class DataExtractor(ArticleSpider, CommentSpider, UserSpider):
         output = []
         for d in result['data']:  # 提取用到的数据
             target = d['target']
+            if target['type'] == 'question_ask':
+                continue
             author = target['author']
             question = target.get('question')
             playlist = target.get('thumbnail_extra_info', {}).get('playlist')
