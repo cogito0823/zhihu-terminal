@@ -106,9 +106,10 @@ def help_question():
     return output
 
 
-def app_exit(cmd: str):
+async def app_exit(cmd: str, spider):
     if cmd in('q', 'quit', 'exit'):
-        sys.exit()
+        await spider.client.close()
+        os._exit(0)
 
 
 def clear():
@@ -128,7 +129,7 @@ async def deal_comments_by_id(spider, uid):
         if not com2_cmd[0]:
             print_colour('输入有误!', 'red')
             continue
-        app_exit(com2_cmd[0])
+        app_exit(com2_cmd[0], spider)
         if com2_cmd[0] == 'back':
             break
         elif com2_cmd[0] == 'up':
@@ -172,7 +173,7 @@ async def deal_comments(spider, result, paging):
         if not comm_cmd:
             print_colour('输入有误!', 'red')
             continue
-        app_exit(comm_cmd[0])
+        await app_exit(comm_cmd[0], spider)
         if comm_cmd[0] == 'back':
             break
         elif comm_cmd[0] == 'n':
@@ -219,7 +220,7 @@ async def deal_article(spider, article):
         if not arl_cmd:
             print_colour('输入有误!', 'red')
             continue
-        app_exit(arl_cmd)
+        await app_exit(arl_cmd, spider)
         if arl_cmd == 'back':
             break
         
@@ -276,7 +277,7 @@ async def deal_question(spider, question_id, uid):
         if not ques_cmd:
             print_colour('输入有误!', 'red')
             continue
-        app_exit(ques_cmd[0])
+        await app_exit(ques_cmd[0], spider)
         if ques_cmd[0] == 'read':
             if len(ques_cmd) != 2:
                 print_colour('输入有误!', 'red')
@@ -335,7 +336,7 @@ async def deal_remd(spider):
         if not remd_cmd:
             print_colour('输入有误!', 'red')
             continue
-        app_exit(remd_cmd[0])
+        await app_exit(remd_cmd[0], spider)
         if remd_cmd[0] == 'f':
             is_print = True
             continue
@@ -402,7 +403,7 @@ async def deal_aten(spider):
         if not aten_cmd:
             print_colour('输入有误!', 'red')
             continue
-        app_exit(aten_cmd[0])
+        await app_exit(aten_cmd[0], spider)
         if aten_cmd[0] == 'f':
             is_print = True
             continue
@@ -457,7 +458,7 @@ async def run(client):
         if not cmd:
             print_colour('输入有误!', 'red')
             continue
-        app_exit(cmd)
+        await app_exit(cmd, spider)
         if cmd == 'remd':
             await deal_remd(spider)
         elif cmd == 'aten':
