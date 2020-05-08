@@ -490,7 +490,7 @@ def check_setting():
         os.makedirs(save_dir)
 
 
-async def login(user, password, whether_load_cookies = True):
+async def login(user='', password='', whether_load_cookies = True):
     """
     登录
     :param user:
@@ -510,19 +510,26 @@ async def main():
     try:
         while True:
             check_setting()
-            use_default_account = input('是否使用默认账号(y|n): ')
-            if use_default_account == 'y':
-                USER = default_username
-                PASSWORD = default_password
-            elif use_default_account == 'n':
-                USER = input('请输入手机号(输入"back"可以返回上级选择)：')
-                if USER == 'back':
+            use_cookies = input("是否直接使用cookies登录(y|n): ")
+            if use_cookies == 'n':
+                use_default_account = input('是否使用默认账号(y|n): ')
+                if use_default_account == 'y':
+                    USER = default_username
+                    PASSWORD = default_password
+                elif use_default_account == 'n':
+                    USER = input('请输入手机号(输入"back"可以返回上级选择)：')
+                    if USER == 'back':
+                        continue
+                    PASSWORD = input('请输入密码')
+                else:
+                    print('输入有误！')
                     continue
-                PASSWORD = input('请输入密码')
+                client = await login(USER, PASSWORD, False)
+            elif use_cookies == 'y':
+                client = await login(True)
             else:
                 print('输入有误！')
                 continue
-            client = await login(USER, PASSWORD, False)
             print_logo()
             await run(client)
             break
