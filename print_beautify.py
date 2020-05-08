@@ -65,13 +65,13 @@ def print_recommend_article(output: list):
     """
     for d in output:
         print_colour('=' * 60, 'white')
-        print_colour(f'article_id:{d["id"]}', 'purple')
-        print_colour(f'question_id:{d["question"]["id"]}', 'purple')
-        print_colour(d['question']['title'], 'purple', end='')
+        print_colour(f"{d['type']}: {d['question']['title']}", 'purple', end='')
         print_colour(f"({d['author']['name']})", 'purple')
+        print_colour(f"赞同数{d.get('voteup_count')} 感谢数{d.get('thanks_count', 0)} "
+                     f"评论数{d.get('comment_count')} 浏览数{d.get('visited_count')}", 'purple')
         print_colour(d['excerpt'])
-        print_colour(f"*赞同数{d.get('voteup_count')} 感谢数{d.get('thanks_count', 0)} "
-                     f"评论数{d.get('comment_count')} 浏览数{d.get('visited_count')}*", 'purple')
+        print_colour(f'article_id:{d["id"]} question_id:{d["question"]["id"]}', 'purple')
+        
 
 def print_aten_article(output: list):
     """
