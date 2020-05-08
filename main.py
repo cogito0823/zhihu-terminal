@@ -48,6 +48,18 @@ def help_recommend():
            "**********************************************************\n"
     return output
 
+def help_aten():
+    output = "\n" \
+           "**********************************************************\n" \
+           "**  f:                       刷新推荐内容\n" \
+           "**  r:                       再次显示本层内容\n" \
+           "**  n:                       下一页" \
+           "**  read:article_id          查看回答具体内容(进入下一级菜单)\n" \
+           "**  question:question_id     查看问题下的其他回答(进入下一级菜单)\n" \
+           "**  back:                    返回上层\n" \
+           "**  q:                       退出系统\n" \
+           "**********************************************************\n"
+    return output
 
 def help_article():
     output = "\n" \
@@ -72,6 +84,7 @@ def help_comments():
     output = "\n" \
             "**********************************************************\n" \
             "**  back                    返回上层\n" \
+            "**  r                       再次显示本层内容\n" \
             "**  q                       退出系统\n" \
             "**  n                       显示下一页\n" \
             "**  p                       显示上一页\n" \
@@ -176,6 +189,9 @@ async def deal_comments(spider, result, paging):
         await app_exit(comm_cmd[0], spider)
         if comm_cmd[0] == 'back':
             break
+        elif comm_cmd[0] == 'r':
+            print_comments(result)
+            continue
         elif comm_cmd[0] == 'n':
             if paging.get('is_end'):
                 print_colour('已是最后一页!', 'red')
