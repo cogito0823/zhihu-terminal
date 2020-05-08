@@ -53,7 +53,7 @@ def help_aten():
            "**********************************************************\n" \
            "**  f:                       刷新推荐内容\n" \
            "**  r:                       再次显示本层内容\n" \
-           "**  n:                       下一页" \
+           "**  n:                       下一页\n" \
            "**  read:article_id          查看回答具体内容(进入下一级菜单)\n" \
            "**  question:question_id     查看问题下的其他回答(进入下一级菜单)\n" \
            "**  back:                    返回上层\n" \
@@ -414,7 +414,7 @@ async def deal_aten(spider):
             is_print = False
             is_next = False
         print_colour('', 'yellow')
-        aten_cmd = input(help_recommend()).lower()
+        aten_cmd = input(help_aten()).lower()
         aten_cmd = aten_cmd.split(':')
         if not aten_cmd:
             print_colour('输入有误!', 'red')
