@@ -113,13 +113,14 @@ def print_article_content(output: dict):
     else:
         url = f'https://www.zhihu.com/question/{question_id}/answer/{article_id}'
     content = html2text.html2text(content)
-    print_colour(content)
     print_colour('-----------------------------------------------------', 'purple')
     print_colour(f'|article_id:{article_id}', 'purple')
     print_colour(f'|question_id:{question_id}', 'purple')
     print_colour(f'|title:{title}', 'purple')
     print_colour(f'|原文链接:{url}', 'purple')
     print_colour('-----------------------------------------------------', 'purple')
+    print_colour(content)
+    
 
 
 def print_question(question: dict):
