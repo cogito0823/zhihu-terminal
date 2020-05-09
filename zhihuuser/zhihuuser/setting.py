@@ -44,18 +44,18 @@ CJY_USER = 'cogito'
 
 #########################################################################
 
-# ip_port = 'secondtransfer.moguproxy.com:9001'
+ip_port = 'secondtransfer.moguproxy.com:9001'
 
-# proxy = "http://" + ip_port
+proxy = "http://" + ip_port
 
-# appKey =  'dno1SjRhbnJuTFJyZ2ZLbzpHOGVqRkhzMzNKajFzd21T'
+appKey =  'ZnZiajc3Q01zNU1WM1lRMTpBdWFSSDRPYnF6TmRKM1ZF'
 
-# proxy_headers = {"Proxy-Authorization": 'Basic dno1SjRhbnJuTFJyZ2ZLbzpHOGVqRkhzMzNKajFzd21T'}
+proxy_headers = {"Proxy-Authorization": 'Basic ZnZiajc3Q01zNU1WM1lRMTpBdWFSSDRPYnF6TmRKM1ZF'}
 
 #########################################################################
 
-from ss import auth
+# from ss import auth
 
-proxy = 'http://forward.xdaili.cn:80'
+# proxy = 'http://forward.xdaili.cn:80'
 
-proxy_headers = {"Proxy-Authorization": auth}
+# proxy_headers = {"Proxy-Authorization": auth}

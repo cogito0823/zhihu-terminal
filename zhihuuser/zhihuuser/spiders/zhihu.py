@@ -10,7 +10,7 @@ class ZhihuSpider(Spider):
     allowed_domains = ['www.zhihu.com']
     start_urls = ['http://www.zhihu.com/']
     follows_url = 'https://www.zhihu.com/api/v4/members/{user}/followers?include={include}&offset={offset}&limit={limit}'
-    start_user = 'xi-feng-du-zi-liang'
+    start_user = 'nogirlnotalk'
     follows_query = ('data[*].''locations,gender,educations,business,allow_message,cover_url,following_topic_count,'
                 'following_count,thanked_count,voteup_count,following_question_count,'
                 'following_favlists_count,following_columns_count,is_followed,pins_count,answer_count,'
@@ -35,7 +35,7 @@ class ZhihuSpider(Spider):
     def start_requests(self):
         yield Request(self.user_url.format(user = self.start_user,include=self.user_query),callback=self.parse_page)
         # yield Request(self.follows_url.format(user=self.start_user, include=self.follows_query, offset=0, limit=20),
-        #               callback = self.parse_follows)
+        #               callback = self.parse_page)
         
     def parse_user(self, response):
         self.i += 1
@@ -49,9 +49,9 @@ class ZhihuSpider(Spider):
         yield item
     
     def parse_page(self,response):
-        #result = json.loads(response.text)
-        #follower_count = result['follower_count']
-        offset_list = [0,20,40,60,80]
+        result = json.loads(response.text)
+        follower_count = result['follower_count']
+        offset_list = [offset for offset in range(follower_count) if offset % 20 == 0]
         for offset in offset_list:
             print(offset)
             yield Request(self.follows_url.format(user=self.start_user, include=self.follows_query, offset=offset, limit=20),
