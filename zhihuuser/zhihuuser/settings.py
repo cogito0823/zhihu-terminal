@@ -39,6 +39,8 @@ ROBOTSTXT_OBEY = False
 # Disable Telnet Console (enabled by default)
 #TELNETCONSOLE_ENABLED = False
 
+COOKIES_ENABLED = False
+
 # Override the default request headers:
 DEFAULT_REQUEST_HEADERS = {
     # 'Host': 'www.zhihu.com',
@@ -50,7 +52,7 @@ DEFAULT_REQUEST_HEADERS = {
     'accept-encoding': 'gzip, deflate'
 }
 HTTPERROR_ALLOWED_CODES = [401,407,403]
-DOWNLOAD_TIMEOUT = 5
+DOWNLOAD_TIMEOUT = 8
 #RETRY_ENABLED = False
 #REDIRECT_ENABLED = False
 # Enable or disable spider middlewares
@@ -65,8 +67,28 @@ DOWNLOADER_MIDDLEWARES = {
    'zhihuuser.middlewares.ProxyMiddleware': 100,
 }
 
-# DOWNLOAD_DELAY = 0.05
-# RANDOMIZE_DOWNLOAD_DELAY = True
+# ===============================================
+
+# redis布隆过滤
+
+# Ensure use this Scheduler
+SCHEDULER = "scrapy_redis_bloomfilter.scheduler.Scheduler"
+
+# Ensure all spiders share same duplicates filter through redis
+DUPEFILTER_CLASS = "scrapy_redis_bloomfilter.dupefilter.RFPDupeFilter"
+# Redis URL
+REDIS_URL = 'redis://localhost:6379/0'
+# Number of Hash Functions to use, defaults to 6
+BLOOMFILTER_HASH_NUMBER = 6
+# Redis Memory Bit of Bloomfilter Usage, 30 means 2^30 = 128MB, defaults to 30
+BLOOMFILTER_BIT = 30
+# Persist
+SCHEDULER_PERSIST = True
+
+# ================================================
+
+DOWNLOAD_DELAY = 0.2
+RANDOMIZE_DOWNLOAD_DELAY = True
 
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html

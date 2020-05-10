@@ -10,7 +10,7 @@ class ZhihuSpider(Spider):
     allowed_domains = ['www.zhihu.com']
     start_urls = ['http://www.zhihu.com/']
     follows_url = 'https://www.zhihu.com/api/v4/members/{user}/followers?include={include}&offset={offset}&limit={limit}'
-    start_user = 'nogirlnotalk'
+    start_user = 'ru-ge-58-70'
     follows_query = ('data[*].''locations,gender,educations,business,allow_message,cover_url,following_topic_count,'
                 'following_count,thanked_count,voteup_count,following_question_count,'
                 'following_favlists_count,following_columns_count,is_followed,pins_count,answer_count,'
@@ -37,17 +37,6 @@ class ZhihuSpider(Spider):
         # yield Request(self.follows_url.format(user=self.start_user, include=self.follows_query, offset=0, limit=20),
         #               callback = self.parse_page)
         
-    def parse_user(self, response):
-        self.i += 1
-        print(self.i)
-        result = json.loads(response.text)
-        item = UserItem()
-        for field in item.fields:
-            if field in result.keys():
-                item[field] = result.get(field)
-        
-        yield item
-    
     def parse_page(self,response):
         result = json.loads(response.text)
         follower_count = result['follower_count']
@@ -70,4 +59,13 @@ class ZhihuSpider(Spider):
                 print(ie)
                 ie = ie+1
         
+    def parse_user(self, response):
+        self.i += 1
+        print(self.i)
+        result = json.loads(response.text)
+        item = UserItem()
+        for field in item.fields:
+            if field in result.keys():
+                item[field] = result.get(field)
         
+        yield item
