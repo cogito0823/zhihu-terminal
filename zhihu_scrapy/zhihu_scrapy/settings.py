@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Scrapy settings for zhihuuser project
+# Scrapy settings for zhihu_scrapy project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -9,15 +9,15 @@
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'zhihuuser'
+BOT_NAME = 'zhihu_scrapy'
 
-SPIDER_MODULES = ['zhihuuser.spiders']
-NEWSPIDER_MODULE = 'zhihuuser.spiders'
+SPIDER_MODULES = ['zhihu_scrapy.spiders']
+NEWSPIDER_MODULE = 'zhihu_scrapy.spiders'
 
-from zhihuuser.ss import auth
+from zhihu_scrapy.ss import auth
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'zhihuuser (+http://www.yourdomain.com)'
+#USER_AGENT = 'zhihu_scrapy (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
@@ -34,12 +34,10 @@ ROBOTSTXT_OBEY = False
 #CONCURRENT_REQUESTS_PER_IP = 16
 
 # Disable cookies (enabled by default)
-#COOKIES_ENABLED = False
+COOKIES_ENABLED = False
 
 # Disable Telnet Console (enabled by default)
 #TELNETCONSOLE_ENABLED = False
-
-COOKIES_ENABLED = False
 
 # Override the default request headers:
 DEFAULT_REQUEST_HEADERS = {
@@ -53,18 +51,16 @@ DEFAULT_REQUEST_HEADERS = {
 }
 HTTPERROR_ALLOWED_CODES = [401,407,403,410]
 DOWNLOAD_TIMEOUT = 4
-#RETRY_ENABLED = False
-#REDIRECT_ENABLED = False
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    'zhihuuser.middlewares.ZhihuuserSpiderMiddleware': 543,
+#    'zhihu_scrapy.middlewares.ZhihuScrapySpiderMiddleware': 543,
 #}
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
-   'zhihuuser.middlewares.ProxyMiddleware': 100,
+   'zhihu_scrapy.middlewares.ProxyMiddleware': 100,
 }
 
 # ===============================================
@@ -77,13 +73,13 @@ SCHEDULER = "scrapy_redis_bloomfilter.scheduler.Scheduler"
 # Ensure all spiders share same duplicates filter through redis
 DUPEFILTER_CLASS = "scrapy_redis_bloomfilter.dupefilter.RFPDupeFilter"
 # Redis URL
-REDIS_URL = 'redis://localhost:6379/0'
+# REDIS_URL = 'redis://localhost:6379/1'
 # Number of Hash Functions to use, defaults to 6
 BLOOMFILTER_HASH_NUMBER = 6
 # Redis Memory Bit of Bloomfilter Usage, 30 means 2^30 = 128MB, defaults to 30
 BLOOMFILTER_BIT = 30
 # Persist
-SCHEDULER_PERSIST = False
+SCHEDULER_PERSIST = True
 
 # ================================================
 
@@ -99,7 +95,9 @@ RANDOMIZE_DOWNLOAD_DELAY = True
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'zhihuuser.pipelines.MongoPipeline': 300,
+    'zhihu_scrapy.pipelines.UserPipeline': 300,
+    'zhihu_scrapy.pipelines.AnswerPipeline': 301,
+    'zhihu_scrapy.pipelines.ArticlePipeline': 302,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

@@ -2,13 +2,18 @@
 import scrapy
 import json
 from scrapy import Request, Spider
-from zhihuuser.items import UserItem
+from zhihu_scrapy.items import UserItem
 import time
 
-class ZhihuSpider(Spider):
-    name = 'zhihu'
+class UserSpider(Spider):
+    name = 'user'
     allowed_domains = ['www.zhihu.com']
     start_urls = ['http://www.zhihu.com/']
+    custom_settings = {
+        'ITEM_PIPELINES': {'zhihu_scrapy.pipelines.UserPipeline': 300},
+        'REDIS_URL': 'redis://localhost:6379/1',
+        'SCHEDULER_PERSIST': False
+    }
     follows_url = 'https://www.zhihu.com/api/v4/members/{user}/followers?include={include}&offset={offset}&limit={limit}'
     start_user = 'tian-kong-71-30-84'
     follows_query = ('data[*].''locations,gender,educations,business,allow_message,cover_url,following_topic_count,'
