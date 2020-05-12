@@ -11,8 +11,8 @@ class UserSpider(Spider):
     start_urls = ['http://www.zhihu.com/']
     custom_settings = {
         'ITEM_PIPELINES': {'zhihu_scrapy.pipelines.UserPipeline': 300},
-        'REDIS_URL': 'redis://localhost:6379/1',
-        'SCHEDULER_PERSIST': False
+        # 'REDIS_URL': 'redis://localhost:6379/1',
+        # 'SCHEDULER_PERSIST': False
     }
     follows_url = 'https://www.zhihu.com/api/v4/members/{user}/followers?include={include}&offset={offset}&limit={limit}'
     start_user = 'tian-kong-71-30-84'

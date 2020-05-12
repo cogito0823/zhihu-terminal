@@ -50,7 +50,7 @@ DEFAULT_REQUEST_HEADERS = {
     'accept-encoding': 'gzip, deflate'
 }
 HTTPERROR_ALLOWED_CODES = [401,407,403,410]
-DOWNLOAD_TIMEOUT = 4
+DOWNLOAD_TIMEOUT = 15
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
@@ -65,25 +65,25 @@ DOWNLOADER_MIDDLEWARES = {
 
 # ===============================================
 
-# redis布隆过滤
+# # redis布隆过滤
 
-# Ensure use this Scheduler
-SCHEDULER = "scrapy_redis_bloomfilter.scheduler.Scheduler"
+# # Ensure use this Scheduler
+# SCHEDULER = "scrapy_redis_bloomfilter.scheduler.Scheduler"
 
-# Ensure all spiders share same duplicates filter through redis
-DUPEFILTER_CLASS = "scrapy_redis_bloomfilter.dupefilter.RFPDupeFilter"
-# Redis URL
+# # Ensure all spiders share same duplicates filter through redis
+# DUPEFILTER_CLASS = "scrapy_redis_bloomfilter.dupefilter.RFPDupeFilter"
+# # Redis URL
 # REDIS_URL = 'redis://localhost:6379/1'
-# Number of Hash Functions to use, defaults to 6
-BLOOMFILTER_HASH_NUMBER = 6
-# Redis Memory Bit of Bloomfilter Usage, 30 means 2^30 = 128MB, defaults to 30
-BLOOMFILTER_BIT = 30
-# Persist
-SCHEDULER_PERSIST = True
+# # Number of Hash Functions to use, defaults to 6
+# BLOOMFILTER_HASH_NUMBER = 6
+# # Redis Memory Bit of Bloomfilter Usage, 30 means 2^30 = 128MB, defaults to 30
+# BLOOMFILTER_BIT = 30
+# # Persist
+# SCHEDULER_PERSIST = False
 
 # ================================================
 
-DOWNLOAD_DELAY = 0.16
+DOWNLOAD_DELAY = 0.4
 RANDOMIZE_DOWNLOAD_DELAY = True
 
 # Enable or disable extensions
