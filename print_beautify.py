@@ -66,7 +66,7 @@ def print_recommend_article(output: list):
     for d in output:
         print_colour('=' * 60, 'white')
         print_colour(f"{d['type']}: {d['question']['title']}", 'purple', end='')
-        print_colour(f"({d['author']['name']})", 'purple')
+        print_colour(f"({d['author']['name']} uid: {d['author'].get('url_token')})", 'purple')
         print_colour(f"赞同数{d.get('voteup_count')} 感谢数{d.get('thanks_count', 0)} "
                      f"评论数{d.get('comment_count')} 浏览数{d.get('visited_count')}", 'purple')
         print_colour(d['excerpt'])
@@ -90,7 +90,7 @@ def print_aten_article(output: list):
         print_colour(f'article_id:{d["id"]}', 'purple')
         print_colour(f'question_id:{d["question"]["id"]}', 'purple')
         print_colour(d['question']['title'], 'purple', end='')
-        print_colour(f"({d['author']['name']})", 'purple')
+        print_colour(f"({d['author']['name']} uid: {d['author'].get('url_token')})", 'purple')
         print_colour(d['excerpt'])
         print_colour(f"*赞同数{d.get('voteup_count')} 感谢数{d.get('thanks_count', 0)} "
                      f"评论数{d.get('comment_count')} 浏览数{d.get('visited_count')}*", 'purple')
@@ -230,3 +230,58 @@ def print_save(article: dict):
         f.write(head)
         f.write(content)
     print_colour(f'保存成功!-->{file}')
+    
+def print_user_info(user_info: dict):
+    d = user_info
+    
+    gender = d.get('gender')
+    if gender == -1:
+        gender = ''
+    elif gender == 0:
+        gender = '女'
+    elif gender == 1:
+        gender = '男'
+        
+    print_colour('=' * 60, 'white')
+    print_colour(f"{d.get('name')}", 'purple')
+    print_colour(f"性别：{gender}", 'purple')
+    print_colour(f"(签名：{d.get('headline')})", 'purple')
+    print_colour(f"(简介：{d.get('description')})", 'purple')
+    print_colour(f"回答：{d.get('question_count')}", 'purple')
+    print_colour(f"文章：{d.get('articles_count')}", 'purple')
+    print_colour(f"收藏夹：{d.get('favorite_count')}", 'purple')
+    print_colour(f"被收藏：{d.get('favorited_count')}", 'purple')
+    print_colour(f"被赞同{d.get('voteup_count')}次", 'purple')
+    print_colour(f"被感谢{d.get('thanked_count')}次", 'purple')
+    
+    badges = d.get('badge')
+    educations = d.get('educations')
+    employments = d.get('employments')
+    business = d.get('business')
+    print_colour('徽章: ')
+    for badge in badges:
+        print_colour(f"    {badge.get('type')}: {badge.get('description')}", 'purple')
+        
+    print_colour('教育经历: ')
+    for education in educations:
+        if education.get('school'):
+            if education.get('major'):
+                print_colour(f"    {education.get('school').get('name')}·{education.get('major').get('name')}", 'purple')
+            else:
+                print_colour(f"    {education.get('school').get('name')}", 'purple')
+        elif education.get('major'):
+            print_colour(f"    {education.get('major').get('name')}", 'purple')
+            
+    print_colour(f"所在行业：{business.get('name')}", 'purple')
+    
+    print_colour('职业经历: ')
+    for employment in employments:
+        if employment.get('company'):
+            if employment.get('job'):
+                print_colour(f"    {employment.get('company').get('name')} [{employment.get('job').get('name')}]", 'purple')
+            else:
+                print_colour(f"    {employment.get('company').get('name')}",'purple')
+        elif employment.get('job'):
+            print_colour(f"    [{employment.get('job').get('name')}]",'purple')
+    # print_colour(d['excerpt'])
+    # print_colour(f'article_id:{d["id"]} question_id:{d["question"]["id"]}', 'purple')

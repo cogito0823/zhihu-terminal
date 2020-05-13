@@ -36,6 +36,7 @@ class ZhihuClient(aiohttp.ClientSession):
                           '(KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36',
             #'Connection': 'Keep-Alive',
             'Referer': 'https://www.zhihu.com/',
+            #'x-zse-83': '3_2.0',
             'accept-encoding': 'gzip, deflate'
         }
         headers.update(proxy_headers)

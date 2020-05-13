@@ -18,7 +18,7 @@ from print_beautify import print_logo
 from help_menu import help_main
 from deal_action import deal_remd
 from deal_action import deal_aten
-
+from deal_action import deal_user
 async def app_exit(cmd: str, spider):
     if cmd in('q', 'quit', 'exit'):
         await spider.client.close()
@@ -35,7 +35,7 @@ async def run(client):
         if not cmd:
             print_colour('输入有误!', 'red')
             continue
-        await app_exit(cmd, spider)
+        await app_exit(cmd, spider) 
         if cmd == 'remd':
             await deal_remd(spider)
         elif cmd == 'aten':

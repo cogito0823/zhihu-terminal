@@ -105,45 +105,45 @@ class ZhihuScrapyDownloaderMiddleware(object):
         spider.logger.info('Spider opened: %s' % spider.name)
 
 class ProxyMiddleware(object):
-    def process_request(self, request, spider):
-        request.meta['proxy'] = 'http://forward.xdaili.cn:80'
-        auth = self.tt()
-        request.headers['Proxy-Authorization'] = auth
+    # def process_request(self, request, spider):
+    #     request.meta['proxy'] = 'http://forward.xdaili.cn:80'
+    #     auth = self.tt()
+    #     request.headers['Proxy-Authorization'] = auth
         
-    def tt(self):
-        _version = sys.version_info
-        is_python3 = (_version[0] == 3)
-        orderno = "ZF202042702563OjFMf"
-        secret = "8124740b580246499a8516f75d38186f"
-        timestamp = str(int(time.time()))              
-        string = ""
-        string = "orderno=" + orderno + "," + "secret=" + secret + "," + "timestamp=" + timestamp
-        if is_python3:                          
-            string = string.encode()
-        md5_string = hashlib.md5(string).hexdigest()                
-        sign = md5_string.upper()
-        auth = "sign=" + sign + "&" + "orderno=" + orderno + "&" + "timestamp=" + timestamp
-        return auth       
-    def process_exception(self, request, exception, spider):
-        # 出现异常时（超时）使用代理
-        print("\n出现异常，正在使用代理重试....\n")
-        request.meta['proxy'] = 'http://forward.xdaili.cn:80'
-        auth = self.tt()
-        request.headers['Proxy-Authorization'] = auth
-        return request
+    # def tt(self):
+    #     _version = sys.version_info
+    #     is_python3 = (_version[0] == 3)
+    #     orderno = "ZF202042702563OjFMf"
+    #     secret = "8124740b580246499a8516f75d38186f"
+    #     timestamp = str(int(time.time()))              
+    #     string = ""
+    #     string = "orderno=" + orderno + "," + "secret=" + secret + "," + "timestamp=" + timestamp
+    #     if is_python3:                          
+    #         string = string.encode()
+    #     md5_string = hashlib.md5(string).hexdigest()                
+    #     sign = md5_string.upper()
+    #     auth = "sign=" + sign + "&" + "orderno=" + orderno + "&" + "timestamp=" + timestamp
+    #     return auth       
+    # def process_exception(self, request, exception, spider):
+    #     # 出现异常时（超时）使用代理
+    #     print("\n出现异常，正在使用代理重试....\n")
+    #     request.meta['proxy'] = 'http://forward.xdaili.cn:80'
+    #     auth = self.tt()
+    #     request.headers['Proxy-Authorization'] = auth
+    #     return request
     
 # ==============================================================
 
 # 蘑菇
     
-    # def process_request(self, request, spider):
-    #     request.meta['proxy'] = 'http://secondtransfer.moguproxy.com:9001'
-    #     request.headers['Proxy-Authorization'] = 'Basic ZnZiajc3Q01zNU1WM1lRMTpBdWFSSDRPYnF6TmRKM1ZF'
+    def process_request(self, request, spider):
+        request.meta['proxy'] = 'http://secondtransfer.moguproxy.com:9001'
+        request.headers['Proxy-Authorization'] = 'M2dzMTFNekp0ZDRweVFZMjoxQWpKdHJvcEhhQ1hQbGFI'
            
-    # def process_exception(self, request, exception, spider):
-    #     request.meta['proxy'] = 'http://secondtransfer.moguproxy.com:9001'
-    #     request.headers['Proxy-Authorization'] = 'Basic ZnZiajc3Q01zNU1WM1lRMTpBdWFSSDRPYnF6TmRKM1ZF'
-    #     return request
+    def process_exception(self, request, exception, spider):
+        request.meta['proxy'] = 'http://secondtransfer.moguproxy.com:9001'
+        request.headers['Proxy-Authorization'] = 'Basic M2dzMTFNekp0ZDRweVFZMjoxQWpKdHJvcEhhQ1hQbGFI'
+        return request
         
     # def process_request(self, request, spider):
     #     request.meta['proxy'] = 'http://117.43.92.46:8889'

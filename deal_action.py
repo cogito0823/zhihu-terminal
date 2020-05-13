@@ -11,12 +11,14 @@ from print_beautify import print_comments
 from print_beautify import print_vote_thank 
 from print_beautify import print_question
 from print_beautify import print_save
+from print_beautify import print_user_info
 from help_menu import help_recommend 
 from help_menu import help_aten 
 from help_menu import help_comments 
 from help_menu import help_comments2 
 from help_menu import help_question
 from help_menu import help_article
+from help_menu import help_user
 from utils import get_com_func
 
 async def app_exit(cmd: str, spider):
@@ -27,6 +29,40 @@ async def app_exit(cmd: str, spider):
 def clear():
     os.system("clear")
     
+async def deal_user(spider, url_token):
+    is_print = True
+    while True:
+        if is_print:
+            user_info = await spider.get_user_info(url_token)
+            if user_info == False:
+                return False
+            print_user_info(user_info)
+            is_print = False
+        print_colour('', 'yellow')
+        remd_cmd = input(help_user()).lower()
+        remd_cmd = remd_cmd.split(':')
+        if not remd_cmd:
+            print_colour('输入有误!', 'red')
+            continue
+        await app_exit(remd_cmd[0], spider)
+        if remd_cmd[0] == 'r':
+            print_user_info(user_info)
+            continue
+        elif remd_cmd[0] == 'question':
+            question_ids = [d.get('question').get('id') for d in user_info]
+            if len(remd_cmd) != 2:
+                print_colour('输入有误!', 'red')
+                continue
+            if remd_cmd[1] not in question_ids:
+                print_colour('输入id有误!', 'red')
+                continue
+            continue
+        elif remd_cmd[0] == 'back':
+            break
+        else:
+            print_colour('输入有误!', 'red')
+            continue
+        
 async def deal_comments_by_id(spider, uid):
     """
     对应id评论相关
@@ -259,6 +295,13 @@ async def deal_remd(spider):
         elif remd_cmd[0] == 'r':
             print_recommend_article(recommend_articles)
             continue
+        elif remd_cmd[0] == 'user':
+            user_info = await spider.get_user_info(remd_cmd[1])
+            if user_info == False:
+                print_colour('url_token输入有误!', 'red')
+                continue
+            await deal_user(spider, remd_cmd[1])
+            continue
         elif remd_cmd[0] == 'read':
             if len(remd_cmd) != 2:
                 print_colour('输入有误!', 'red')
@@ -332,6 +375,13 @@ async def deal_aten(spider):
                 continue
             is_print = True
             is_next = True
+            continue
+        elif aten_cmd[0] == 'user':
+            user_info = await spider.get_user_info(aten_cmd[1])
+            if user_info == False:
+                print_colour('url_token输入有误!', 'red')
+                continue
+            await deal_user(spider, aten_cmd[1])
             continue
         elif aten_cmd[0] == 'read':
             if len(aten_cmd) != 2:

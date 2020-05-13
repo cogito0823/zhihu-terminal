@@ -9,6 +9,7 @@ from setting import proxy
 
 class ArticleSpider(SpiderBaseclass):
     """文章相关"""
+    
     async def get_recommend_article(self) -> dict:
         """
         获取推荐文章

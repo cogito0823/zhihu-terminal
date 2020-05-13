@@ -41,16 +41,16 @@ COOKIES_ENABLED = False
 
 # Override the default request headers:
 DEFAULT_REQUEST_HEADERS = {
-    # 'Host': 'www.zhihu.com',
+    'Host': 'www.zhihu.com',
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
                     '(KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36',
     # 'authorization': 'oauth c3cef7c66a1843f8b3a9e6a1e3160e20',
     # 'Connection': 'Keep-Alive',
-    'Referer': 'https://www.zhihu.com/',
+    'Referer': 'https://www.zhihu.com/search?type=content&q=23',
     'accept-encoding': 'gzip, deflate'
 }
 HTTPERROR_ALLOWED_CODES = [401,407,403,410]
-DOWNLOAD_TIMEOUT = 15
+DOWNLOAD_TIMEOUT = 4
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
@@ -83,7 +83,7 @@ DOWNLOADER_MIDDLEWARES = {
 
 # ================================================
 
-DOWNLOAD_DELAY = 0.4
+DOWNLOAD_DELAY = 0.16
 RANDOMIZE_DOWNLOAD_DELAY = True
 
 # Enable or disable extensions

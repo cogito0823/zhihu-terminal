@@ -10,7 +10,11 @@ from spider.user_spider import UserSpider
 
 class DataExtractor(ArticleSpider, CommentSpider, UserSpider):
     """数据提取"""
-
+    async def get_user_info(self, url_token):
+        result = await super().get_user_info(url_token)
+        if result == False:
+            return False
+        return result
     async def get_self_info(self) -> dict:
         """
         获取自己的信息
@@ -49,6 +53,7 @@ class DataExtractor(ArticleSpider, CommentSpider, UserSpider):
                     'head': author['avatar_url'],
                     'gender': author.get('gender'),
                     'url': author.get('url'),
+                    'url_token': author.get('url_token')
                 },
                 'excerpt': target.get('excerpt_new') or target.get('excerpt'),
                 'content': target['content'],
@@ -123,6 +128,7 @@ class DataExtractor(ArticleSpider, CommentSpider, UserSpider):
                     'head': author['avatar_url'],
                     'gender': author.get('gender'),
                     'url': author.get('url'),
+                    'url_token': author.get('url_token')
                 },
                 'excerpt': target.get('excerpt_new') or target.get('excerpt'),
                 'content': target['content'],
