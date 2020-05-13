@@ -1,6 +1,24 @@
-from print_beautify import *
-from help_menu import *
+import os
+
+from utils import print_colour
+from print_beautify import print_recommend_article
+from print_beautify import print_aten_article 
+from print_beautify import print_vote_comments 
+from print_beautify import print_article_content 
+from print_beautify import print_article_content
+from print_beautify import print_article_content 
+from print_beautify import print_comments 
+from print_beautify import print_vote_thank 
+from print_beautify import print_question
+from print_beautify import print_save
+from help_menu import help_recommend 
+from help_menu import help_aten 
+from help_menu import help_comments 
+from help_menu import help_comments2 
+from help_menu import help_question
+from help_menu import help_article
 from utils import get_com_func
+
 async def app_exit(cmd: str, spider):
     if cmd in('q', 'quit', 'exit'):
         await spider.client.close()

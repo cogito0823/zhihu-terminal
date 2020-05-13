@@ -13,9 +13,17 @@ from setting import USER as default_username
 from setting import PASSWORD as default_password
 from setting import SAVE_DIR
 from setting import COOKIE_FILE,proxy
+from utils import print_colour
 from print_beautify import print_logo
-from deal_action import *
+from help_menu import help_main
+from deal_action import deal_remd
+from deal_action import deal_aten
 
+async def app_exit(cmd: str, spider):
+    if cmd in('q', 'quit', 'exit'):
+        await spider.client.close()
+        os._exit(0)
+        
 async def run(client):
     spider = DataExtractor(client)
     self_info = await spider.get_self_info()
