@@ -35,7 +35,7 @@ async def deal_user(spider, url_token):
         if is_print:
             user_info = await spider.get_user_info(url_token)
             if user_info == False:
-                return False
+                break
             print_user_info(user_info)
             is_print = False
         print_colour('', 'yellow')
