@@ -12,7 +12,9 @@ class DataExtractor(ArticleSpider, CommentSpider, UserSpider):
     """数据提取"""
     async def get_user_info(self, url_token):
         result = await super().get_user_info(url_token)
-        if result.get('error'):
+        if not result:
+            return False
+        elif result.get('error'):
             return False
         return result
     async def get_self_info(self) -> dict:

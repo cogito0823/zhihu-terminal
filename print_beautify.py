@@ -277,29 +277,33 @@ def print_user_info(user_info: dict):
     employments = d.get('employments')
     business = d.get('business')
     print_colour('徽章: ')
-    for badge in badges:
-        print_colour(f"    {badge.get('type')}: {badge.get('description')}", 'purple')
+    if badges:
+        for badge in badges:
+            print_colour(f"    {badge.get('type')}: {badge.get('description')}", 'purple')
         
     print_colour('教育经历: ')
-    for education in educations:
-        if education.get('school'):
-            if education.get('major'):
-                print_colour(f"    {education.get('school').get('name')}·{education.get('major').get('name')}", 'purple')
-            else:
-                print_colour(f"    {education.get('school').get('name')}", 'purple')
-        elif education.get('major'):
-            print_colour(f"    {education.get('major').get('name')}", 'purple')
-            
-    print_colour(f"所在行业：{business.get('name')}", 'purple')
+    if educations:
+        for education in educations:
+            if education.get('school'):
+                if education.get('major'):
+                    print_colour(f"    {education.get('school').get('name')}·{education.get('major').get('name')}", 'purple')
+                else:
+                    print_colour(f"    {education.get('school').get('name')}", 'purple')
+            elif education.get('major'):
+                print_colour(f"    {education.get('major').get('name')}", 'purple')
+    
+    if business:        
+        print_colour(f"所在行业：{business.get('name')}", 'purple')
     
     print_colour('职业经历: ')
-    for employment in employments:
-        if employment.get('company'):
-            if employment.get('job'):
-                print_colour(f"    {employment.get('company').get('name')} [{employment.get('job').get('name')}]", 'purple')
-            else:
-                print_colour(f"    {employment.get('company').get('name')}",'purple')
-        elif employment.get('job'):
-            print_colour(f"    [{employment.get('job').get('name')}]",'purple')
+    if employments:
+        for employment in employments:
+            if employment.get('company'):
+                if employment.get('job'):
+                    print_colour(f"    {employment.get('company').get('name')} [{employment.get('job').get('name')}]", 'purple')
+                else:
+                    print_colour(f"    {employment.get('company').get('name')}",'purple')
+            elif employment.get('job'):
+                print_colour(f"    [{employment.get('job').get('name')}]",'purple')
     # print_colour(d['excerpt'])
     # print_colour(f'article_id:{d["id"]} question_id:{d["question"]["id"]}', 'purple')

@@ -288,7 +288,7 @@ async def deal_remd(spider):
             print_recommend_article(recommend_articles)
             is_print = False
         print_colour('', 'yellow')
-        remd_cmd = input(help_recommend()).lower()
+        remd_cmd = input(help_recommend())
         remd_cmd = remd_cmd.split(':')
         if not remd_cmd:
             print_colour('输入有误!', 'red')
@@ -303,7 +303,7 @@ async def deal_remd(spider):
         elif remd_cmd[0] == 'user':
             user_info = await spider.get_user_info(remd_cmd[1])
             if user_info == False:
-                print_colour('url_token输入有误!', 'red')
+                print_colour('用户不存在或url_token输入有误!', 'red')
                 continue
             await deal_user(spider, remd_cmd[1])
             continue
@@ -362,7 +362,7 @@ async def deal_aten(spider):
             is_print = False
             is_next = False
         print_colour('', 'yellow')
-        aten_cmd = input(help_aten()).lower()
+        aten_cmd = input(help_aten())
         aten_cmd = aten_cmd.split(':')
         if not aten_cmd:
             print_colour('输入有误!', 'red')
@@ -384,7 +384,7 @@ async def deal_aten(spider):
         elif aten_cmd[0] == 'user':
             user_info = await spider.get_user_info(aten_cmd[1])
             if user_info == False:
-                print_colour('url_token输入有误!', 'red')
+                print_colour('用户不存在或url_token输入有误!', 'red')
                 continue
             await deal_user(spider, aten_cmd[1])
             continue
@@ -465,7 +465,7 @@ async def deal_act(spider):
         elif aten_cmd[0] == 'user':
             user_info = await spider.get_user_info(aten_cmd[1])
             if user_info == False:
-                print_colour('url_token输入有误!', 'red')
+                print_colour('用户不存在或url_token输入有误!', 'red')
                 continue
             await deal_user(spider, aten_cmd[1])
             continue
