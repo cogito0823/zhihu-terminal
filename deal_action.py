@@ -28,9 +28,8 @@ async def app_exit(cmd: str, spider):
         await spider.client.close()
         os._exit(0)
 
-def clear():
-    os.system("clear")
-    
+# ========================== 用户 ===============================
+
 async def deal_user(spider, url_token):
     is_print = True
     while True:
@@ -68,6 +67,8 @@ async def deal_user(spider, url_token):
             print_colour('输入有误!', 'red')
             continue
         
+# ========================== 评论 ===============================
+
 async def deal_comments_by_id(spider, uid):
     """
     对应id评论相关
@@ -92,11 +93,6 @@ async def deal_comments_by_id(spider, uid):
             print_colour(result)
             print_vote_comments(result, 'neutral')
         elif com2_cmd[0] == 'reply' and len(com2_cmd) == 2:
-            # todo 回复评论
-            # data = {
-            #     'content': com2_cmd[1],
-            #     'replyToId': uid,
-            # }
             print_colour('功能还在开发中...', 'red')
             continue
         else:
@@ -104,14 +100,12 @@ async def deal_comments_by_id(spider, uid):
             continue
     pass
 
-
 async def deal_comments(spider, result, paging):
     """
     处理评论命令
     :param spider:
     :return:
     """
-    # all_coments = []
     while True:
         comment_ids = []
         for d in result:
@@ -160,6 +154,7 @@ async def deal_comments(spider, result, paging):
             print_colour('输入有误!', 'red')
             continue
 
+# ========================== 文章 ===============================
 
 async def deal_article(spider, article):
     """
@@ -200,7 +195,6 @@ async def deal_article(spider, article):
             print_save(article)
             continue
         elif arl_cmd == 'enshrine':
-            # todo 收藏回答
             print_colour('功能还在开发中...', 'red')
             continue
         elif arl_cmd == 'question':
@@ -210,6 +204,7 @@ async def deal_article(spider, article):
             print_colour('输入有误!', 'red')
             continue
 
+# ========================== 问题 ===============================
 
 async def deal_question(spider, question_id, uid):
     """
@@ -273,6 +268,7 @@ async def deal_question(spider, question_id, uid):
             print_colour('输入有误!', 'red')
             continue
 
+# ========================== 展示 ===============================
 
 async def deal_remd(spider):
     """

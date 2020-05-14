@@ -55,7 +55,6 @@ class CommentSpider(SpiderBaseclass):
         self.logger.debug(result)
         return result
 
-
 if __name__ == '__main__':
     import asyncio
     from setting import USER, PASSWORD

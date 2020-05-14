@@ -10,6 +10,8 @@ from setting import proxy
 class ArticleSpider(SpiderBaseclass):
     """文章相关"""
     
+# ========================== 展示 ===============================
+
     async def get_recommend_article(self) -> dict:
         """
         获取推荐文章
@@ -67,6 +69,17 @@ class ArticleSpider(SpiderBaseclass):
         self.logger.debug(result)
         return result
 
+    async def get_items(self, fid, *next_url):
+        items_url = f'https://www.zhihu.com/api/v4/favlists/{fid}/items?'
+        data = {
+            'include': 'data[*].created,content.comment_count,suggest_edit,is_normal,thumbnail_extra_info,thumbnail,description,content,voteup_count,created,updated,upvoted_followees,voting,review_info,is_labeled,label_info,relationship.is_authorized,voting,is_author,is_thanked,is_nothelp,is_recognized;data[*].author.badge[?(type=best_answerer)].topics',
+            'limit': 6
+        }
+        async with self.client.get(url=items_url, params=data, proxy=proxy) as r:
+            result = await r.json()
+        self.logger.debug(result)
+        return result
+    
     async def get_act_article(self,url_token, *next_url) -> dict:
         """
         获取动态文章
@@ -95,7 +108,9 @@ class ArticleSpider(SpiderBaseclass):
             result = await r.json()
         self.logger.debug(result)
         return result
-    
+
+# ========================== 互动 ===============================
+
     async def endorse_answer(self, uid: str, typ: str = 'up') -> dict:
         """
         赞同回答
@@ -128,6 +143,8 @@ class ArticleSpider(SpiderBaseclass):
         result = await r.json()
         self.logger.debug(result)
         return result
+
+# ========================== 问题 ===============================
 
     async def get_question_article_first(self, question_id: str, uid: str):
         """

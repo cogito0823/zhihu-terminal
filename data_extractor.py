@@ -10,6 +10,9 @@ from spider.user_spider import UserSpider
 
 class DataExtractor(ArticleSpider, CommentSpider, UserSpider):
     """数据提取"""
+    
+# ========================== 用户 ===============================
+
     async def get_user_info(self, url_token):
         result = await super().get_user_info(url_token)
         if not result:
@@ -17,6 +20,7 @@ class DataExtractor(ArticleSpider, CommentSpider, UserSpider):
         elif result.get('error'):
             return False
         return result
+    
     async def get_self_info(self) -> dict:
         """
         获取自己的信息
@@ -33,6 +37,8 @@ class DataExtractor(ArticleSpider, CommentSpider, UserSpider):
         }
         self.logger.debug(output)
         return output
+
+# ========================= 展示页  =============================
 
     async def get_recommend_article(self) -> list:
         """
@@ -257,6 +263,8 @@ class DataExtractor(ArticleSpider, CommentSpider, UserSpider):
         self.logger.debug(output)
         return output
     
+# ========================== 评论 ===============================
+
     def extract_comments(self, result: dict) -> tuple:
         """
         提取评论
@@ -324,6 +332,8 @@ class DataExtractor(ArticleSpider, CommentSpider, UserSpider):
         output, paging = self.extract_comments(result)
         return output, paging
 
+# ========================== 问题 ===============================
+
     async def get_question_details(self, question_id: str, uid: str) -> dict:
         """
         获取评论
@@ -349,24 +359,6 @@ class DataExtractor(ArticleSpider, CommentSpider, UserSpider):
                 'followerCount': questions['followerCount'],
         }
         return output
-    # TODO
-    # async def get_first_answer_by_qustion(self, question_id: str, uid: str) -> dict:
-    #     """
-    #     获取第一个回答,这个回答很可能在后续的查询中查询不到
-    #     :return:
-    #     """
-    #     result = await super().get_question_article_first(question_id, uid)
-    #     doc = pq(result)
-    #     data = doc('#js-initialData').text()
-    #     result = json.loads(data)
-    #     # questions = list(result['initialState']['entities']['questions'].values())[0]
-    #     answers = list(result['initialState']['entities']['answers'].values())[0]
-    #     output = {
-    #             'author': {
-    #                 ''
-    #             }
-    #     }
-    #     return output
 
     def extract_article_by_question(self, result):
         """

@@ -49,7 +49,7 @@ def print_colour(s: Any, colour: str='green', way: int=0, **kwargs):
     print(f'\033[{way};{colour_map[colour]};m{s}', **kwargs)
 
 
-abs_dir = lambda: os.path.dirname(os.path.abspath(__file__))
+# abs_dir = lambda: os.path.dirname(os.path.abspath(__file__))
 
 
 class SpiderBaseclass(object):
