@@ -87,7 +87,7 @@ async def main():
                     continue
                 client = await login(USER, PASSWORD, False)
             elif use_cookies == 'y':
-                client = await login(True)
+                client = await login()
             else:
                 print('输入有误！')
                 continue

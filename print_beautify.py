@@ -75,7 +75,7 @@ def print_recommend_article(output: list):
 
 def print_aten_article(output: list):
     """
-    打印推荐文章简述
+    打印关注文章简述
     :param output:
     :return:
     """
@@ -95,6 +95,24 @@ def print_aten_article(output: list):
         print_colour(f"*赞同数{d.get('voteup_count')} 感谢数{d.get('thanks_count', 0)} "
                      f"评论数{d.get('comment_count')} 浏览数{d.get('visited_count')}*", 'purple')
 
+def print_act_article(output: list):
+    """
+    打印关注文章简述
+    :param output:
+    :return:
+    """
+    for d in output:
+        print_colour('=' * 60, 'white')
+        action_text_tpl = d['action_text_tpl']
+        print_colour(f'{action_text_tpl}', 'purple')
+        print_colour(f'article_id:{d["id"]}', 'purple')
+        print_colour(f'question_id:{d["question"]["id"]}', 'purple')
+        print_colour(d['question']['title'], 'purple', end='')
+        print_colour(f"({d['author']['name']} uid: {d['author'].get('url_token')})", 'purple')
+        print_colour(d['excerpt'])
+        print_colour(f"*赞同数{d.get('voteup_count')} 感谢数{d.get('thanks_count', 0)} "
+                     f"评论数{d.get('comment_count')} 浏览数{d.get('visited_count')}*", 'purple')
+        
 def print_article_content(output: dict):
     """
     打印文章内容

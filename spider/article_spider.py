@@ -41,7 +41,7 @@ class ArticleSpider(SpiderBaseclass):
 
     async def get_aten_article(self, *next_url) -> dict:
         """
-        获取推荐文章
+        获取关注文章
         :return:
         """
         url = 'https://www.zhihu.com'
@@ -67,6 +67,35 @@ class ArticleSpider(SpiderBaseclass):
         self.logger.debug(result)
         return result
 
+    async def get_act_article(self,*next_url) -> dict:
+        """
+        获取动态文章
+        :return:
+        """
+        url = 'https://www.zhihu.com'
+        for _ in range(2):
+            async with self.client.get(url, proxy=proxy) as r:
+                resp = await r.text()
+                session_token = re.findall(r'session_token=(.*?)\&', resp)
+            if session_token:
+                session_token = session_token[0]
+                break
+        else:
+            raise AssertionError('获取session_token失败')
+        if next_url:
+            url = next_url[0]
+        else:
+            url = 'https://www.zhihu.com/api/v3/feed/members/liu-zhen-rui-48/activities?'
+            
+        data = {
+            'desktop': 'true',
+            'limit': '6',
+        }
+        async with self.client.get(url, params=data, proxy=proxy) as r:
+            result = await r.json()
+        self.logger.debug(result)
+        return result
+    
     async def endorse_answer(self, uid: str, typ: str = 'up') -> dict:
         """
         赞同回答

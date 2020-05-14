@@ -34,7 +34,7 @@ class UserSpider(SpiderBaseclass):
               'mutual_followees_count,participated_live_count,industry_category,follower_count,'
               'articles_count,org_name,org_homepage,badge[?(type=best_answerer)].topics')
         try:
-            async with self.client.get(user_url.format(user=url_token, include=user_query), proxy=proxy) as resp:
+            async with self.client.get(user_url.format(user='MarryMea', include=user_query), proxy=proxy) as resp:
                 result = await resp.json()
                 self.logger.debug(result)
             return result
