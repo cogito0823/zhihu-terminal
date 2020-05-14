@@ -51,7 +51,7 @@ async def deal_user(spider, url_token):
             print_user_info(user_info)
             continue
         elif remd_cmd[0] == "act":
-            await deal_act(spider)
+            await deal_act(spider,url_token)
             continue
         elif remd_cmd[0] == 'question':
             question_ids = [d.get('question').get('id') for d in user_info]
@@ -418,7 +418,7 @@ async def deal_aten(spider):
             print_colour('输入有误!', 'red')
             continue
 
-async def deal_act(spider):
+async def deal_act(spider,url_token):
     """
     处理推荐文章命令
     :param spider:
@@ -431,12 +431,12 @@ async def deal_act(spider):
         if is_print:
             if is_next:
                 next_url = paging['next']
-                aten_articles = await spider.get_act_article(next_url)
+                aten_articles = await spider.get_act_article(url_token, next_url)
                 paging = aten_articles.pop(-1)
                 ids = [d.get('id') for d in aten_articles]
                 print_act_article(aten_articles)
             else:
-                aten_articles = await spider.get_act_article()
+                aten_articles = await spider.get_act_article(url_token)
                 paging = aten_articles.pop(-1)
                 ids = [d.get('id') for d in aten_articles]
                 print_act_article(aten_articles)

@@ -67,7 +67,7 @@ class ArticleSpider(SpiderBaseclass):
         self.logger.debug(result)
         return result
 
-    async def get_act_article(self,*next_url) -> dict:
+    async def get_act_article(self,url_token, *next_url) -> dict:
         """
         获取动态文章
         :return:
@@ -85,7 +85,7 @@ class ArticleSpider(SpiderBaseclass):
         if next_url:
             url = next_url[0]
         else:
-            url = 'https://www.zhihu.com/api/v3/feed/members/liu-zhen-rui-48/activities?'
+            url = f'https://www.zhihu.com/api/v3/feed/members/{url_token}/activities?'
             
         data = {
             'desktop': 'true',

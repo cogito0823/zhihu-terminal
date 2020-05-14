@@ -179,15 +179,15 @@ class DataExtractor(ArticleSpider, CommentSpider, UserSpider):
         self.logger.debug(output)
         return output
 
-    async def get_act_article(self, *next_url):
+    async def get_act_article(self,url_token, *next_url):
         """
         获取动态文章
         :return:
         """
         if next_url:  
-            result = await super().get_act_article(next_url[0])
+            result = await super().get_act_article(url_token, next_url[0])
         else:
-            result = await super().get_act_article()
+            result = await super().get_act_article(url_token)
         output = []
         for d in result['data']:  # 提取用到的数据
             if not 'target' in d.keys():
