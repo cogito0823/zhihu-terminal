@@ -22,6 +22,7 @@ from setting import COOKIE_FILE,proxy
 from setting import proxy_headers
 import detect_captcha
 from aiohttp import TCPConnector
+from deal_action import app_exit
 
 class ZhihuClient(aiohttp.ClientSession):
     """扩展ClientSession"""
@@ -87,6 +88,12 @@ class ZhihuClient(aiohttp.ClientSession):
         # 获取验证码后登录，验证码错误则重新登录
         while True:
             captcha = await self._get_captcha()
+            if not captcha:
+                continue
+            if captcha == '0':
+                captcha = ''
+            elif captcha == 'back':
+                return 'relogin'
             timestamp = int(time.time() * 1000)
             login_data.update({
                 'captcha': captcha,
@@ -100,7 +107,11 @@ class ZhihuClient(aiohttp.ClientSession):
                 if 'error' in resp:
                     print_colour(json.loads(resp)['error'], 'red')
                     self.logger.debug(f"登录失败:{json.loads(resp)['error']}")
-                    continue
+                    code = json.loads(resp)['error']['code']
+                    if not code == 120005:
+                        return 'relogin'
+                    else:
+                        continue
                 self.logger.debug(resp)
                 is_succ = await self.check_login()
                 if is_succ:
@@ -124,36 +135,30 @@ class ZhihuClient(aiohttp.ClientSession):
             resp = await r.text()
             show_captcha = re.search(r'true', resp)
         if show_captcha:
-            async with self.put(url, proxy=proxy) as r:
-                resp = await r.text()
-            json_data = json.loads(resp)
-            img_base64 = json_data['img_base64'].replace(r'\n', '')
-            with open(f'./captcha.jpg', 'wb') as f:
-                f.write(base64.b64decode(img_base64))
-            # if lang == 'cn':
-            #     import matplotlib.pyplot as plt
-            #     plt.imshow(img)
-            #     print('点击所有倒立的汉字，在命令行中按回车提交')
-            #     points = plt.ginput(7)
-            #     capt = json.dumps({'img_size': [200, 44],
-            #                        'input_points': [[i[0] / 2, i[1] / 2] for i in points]})
-            # else:
-            # img_thread = threading.Thread(target=img.show, daemon=True)
-            # img_thread.start()
-            # TODO 验证码自动识别实现
-            #loop = asyncio.get_running_loop()
-            # loop.run_in_executor(None, img.show)
-            whether_use_detect_aptcha =input('是否使用打码平台(y|n): ')
-            if whether_use_detect_aptcha == 'y':
-                    # 这里可自行集成验证码识别模块
-                    pic_str = detect_captcha.detect('captcha.jpg')
-                    capt = pic_str
-            else:
-                capt = input('请输入图片里的验证码：')
-            # 这里必须先把参数 POST 验证码接口
-            await self.post(url, data={'input_text': capt}, proxy=proxy)
-            return capt
-        return ''
+            while True:
+                async with self.put(url, proxy=proxy) as r:
+                    resp = await r.text()
+                json_data = json.loads(resp)
+                img_base64 = json_data['img_base64'].replace(r'\n', '')
+                with open(f'./captcha.jpg', 'wb') as f:
+                    f.write(base64.b64decode(img_base64))
+                whether_use_detect_aptcha =input('是否使用打码平台(y|n): ')
+                if whether_use_detect_aptcha == 'back':
+                    return 'back'
+                await app_exit(whether_use_detect_aptcha)
+                if whether_use_detect_aptcha == 'y':
+                        # 这里可自行集成验证码识别模块
+                        pic_str = detect_captcha.detect('captcha.jpg')
+                        capt = pic_str
+                else:
+                    capt = input('请输入图片里的验证码：')
+                    await app_exit(capt)
+                    if capt == 'back':
+                        continue
+                # 这里必须先把参数 POST 验证码接口
+                await self.post(url, data={'input_text': capt}, proxy=proxy)
+                return capt
+        return '0'
 
     async def check_login(self) -> bool:
         """
@@ -210,7 +215,7 @@ if __name__ == '__main__':
     from setting import USER, PASSWORD
 
     async def test():
-        client = ZhihuClient(user=USER, password=PASSWORD, connector=TCPConnector(ssl=False))
+        client = ZhihuClient(user=USER, password='ddfgdfgr345434', connector=TCPConnector(ssl=False))
         await client.login(load_cookies=False)
         await client.close()
     asyncio.run(test())
