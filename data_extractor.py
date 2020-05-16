@@ -325,6 +325,11 @@ class DataExtractor(ArticleSpider, CommentSpider, UserSpider):
         output.append(paging)
         self.logger.debug(output)
         return output
+    
+    async def get_fav_list(self, url_token='hua-chen-15-43-10', *next_url):
+        result = await super().get_fav_list(url_token)
+        print(result)
+        
 # ========================== 评论 ===============================
 
     def extract_comments(self, result: dict) -> tuple:

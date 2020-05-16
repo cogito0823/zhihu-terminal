@@ -40,6 +40,8 @@ async def run(client):
             await deal_aten(spider)
         elif cmd == 'item':
             await deal_items(spider)
+        elif cmd == 'fav':
+            await spider.get_fav_list()
         else:
             print_colour('输入有误!', 'red')
             continue

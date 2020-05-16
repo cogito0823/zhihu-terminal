@@ -67,7 +67,7 @@ class ArticleSpider(SpiderBaseclass):
         self.logger.debug(result)
         return result
    
-    async def get_act_article(self,url_token, *next_url) -> dict:
+    async def get_act_article(self, url_token, *next_url) -> dict:
         """
         获取动态文章
         :return:
@@ -105,6 +105,19 @@ class ArticleSpider(SpiderBaseclass):
         self.logger.debug(result)
         return result
     
+    async def get_fav_list(self, url_token):
+        session_token = await self.get_session_token()
+        items_url = f'https://www.zhihu.com/api/v4/members/{url_token}/favlists?'
+        data = {
+            'session_token': session_token,
+            'include': 'data[*].updated_time,answer_count,follower_count,creator,description,is_following,comment_count,created_time',
+            'limit': 6
+        }
+        url = items_url
+        async with self.client.get(url=url, params=data, proxy=proxy) as r:
+            result = await r.json()
+        self.logger.debug(result)
+        return result
 # ========================== 互动 ===============================
 
     async def endorse_answer(self, uid: str, typ: str = 'up') -> dict:
