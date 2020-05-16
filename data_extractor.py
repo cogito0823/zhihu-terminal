@@ -263,6 +263,68 @@ class DataExtractor(ArticleSpider, CommentSpider, UserSpider):
         self.logger.debug(output)
         return output
     
+    async def get_items_article(self, fid='114929484', *next_url):
+        if next_url:  
+            result = await super().get_items_article(fid, next_url[0])
+        else:
+            result = await super().get_items_article(fid)
+        output = []
+        for d in result['data']:  # 提取用到的数据
+            created = d.get("created")
+            if not 'content' in d.keys():
+                continue
+            target = d['content']
+            if target['type'] == 'question':
+                continue
+            if target['type'] == 'roundtable':
+                continue
+            if target['type'] == 'column':
+                continue
+            author = target['author']
+            question = target.get('question')
+            playlist = target.get('thumbnail_extra_info', {}).get('playlist')
+            article_info = {
+                'author': {  # 作者信息
+                    'name': author['name'],
+                    'headline': author.get('headline'),
+                    'head': author['avatar_url'],
+                    'gender': author.get('gender'),
+                    'url': author.get('url'),
+                    'url_token': author.get('url_token')
+                },
+                'excerpt': target.get('excerpt_new') or target.get('excerpt'),
+                'content': target['content'],
+                'voteup_count': target.get('voteup_count', target.get('vote_count')),  # 赞同数
+                'comment_count': target['comment_count'],
+                'id': str(target['id']),
+                'type': target['type'],
+                'created_time': created,
+            }
+            # # 如果type是zvideo，那么voteup_count对应的属性名是vote_count,这里把属性名修改过来
+            if target['type'] == 'zvideo' and playlist:
+                article_info['content'] += f'\n{playlist.get("hd", {}).get("url", "")}'
+                article_info['excerpt'] = '**video**'
+            #     article_info['voteup_count'] = target.get('vote_count')
+            if question:
+                question = {
+                    'title': question['title'],
+                    'url': question['url'],
+                    'id': str(question['id']),
+                    'type': 'normal',
+                }
+            else:
+                question = {
+                    'title': target['title'],
+                    'url': target.get('url'),
+                    'type': 'market',
+                    'id': ''
+                }
+            article_info['question'] = question
+            output.append(article_info)
+        paging = result['paging']
+        output.append(paging)
+        self.logger.debug(output)
+        return output
 # ========================== 评论 ===============================
 
     def extract_comments(self, result: dict) -> tuple:
@@ -378,6 +440,7 @@ class DataExtractor(ArticleSpider, CommentSpider, UserSpider):
                     'head': author['avatar_url'],
                     'gender': author.get('gender'),
                     'url': author.get('url'),
+                    'url_token': author.get('url_token')
                 },
                 'excerpt': target.get('excerpt_new') or target.get('excerpt'),
                 'content': target['content'],

@@ -9,14 +9,10 @@ from setting import proxy
 
 class ArticleSpider(SpiderBaseclass):
     """文章相关"""
-    
-# ========================== 展示 ===============================
 
-    async def get_recommend_article(self) -> dict:
-        """
-        获取推荐文章
-        :return:
-        """
+# ================== 获取session_token =========================
+    
+    async def get_session_token(self):
         url = 'https://www.zhihu.com'
         for _ in range(2):
             async with self.client.get(url, proxy=proxy) as r:
@@ -25,8 +21,18 @@ class ArticleSpider(SpiderBaseclass):
             if session_token:
                 session_token = session_token[0]
                 break
-        else:
-            raise AssertionError('获取session_token失败')
+            else:
+                raise AssertionError('获取session_token失败')
+        return session_token
+    
+# ========================== 展示 ===============================
+    
+    async def get_recommend_article(self) -> dict:
+        """
+        获取推荐文章
+        :return:
+        """
+        session_token = await self.get_session_token()
         url = 'https://www.zhihu.com/api/v3/feed/topstory/recommend?'
         data = {
             'session_token': session_token,
@@ -46,21 +52,13 @@ class ArticleSpider(SpiderBaseclass):
         获取关注文章
         :return:
         """
-        url = 'https://www.zhihu.com'
-        for _ in range(2):
-            async with self.client.get(url, proxy=proxy) as r:
-                resp = await r.text()
-                session_token = re.findall(r'session_token=(.*?)\&', resp)
-            if session_token:
-                session_token = session_token[0]
-                break
-        else:
-            raise AssertionError('获取session_token失败')
+        session_token = await self.get_session_token()
         if next_url:
             url = next_url[0]
         else:
             url = 'https://www.zhihu.com/api/v3/moments?'
         data = {
+            'session_token': session_token,
             'desktop': 'true',
             'limit': '6',
         }
@@ -68,39 +66,20 @@ class ArticleSpider(SpiderBaseclass):
             result = await r.json()
         self.logger.debug(result)
         return result
-
-    async def get_items(self, fid, *next_url):
-        items_url = f'https://www.zhihu.com/api/v4/favlists/{fid}/items?'
-        data = {
-            'include': 'data[*].created,content.comment_count,suggest_edit,is_normal,thumbnail_extra_info,thumbnail,description,content,voteup_count,created,updated,upvoted_followees,voting,review_info,is_labeled,label_info,relationship.is_authorized,voting,is_author,is_thanked,is_nothelp,is_recognized;data[*].author.badge[?(type=best_answerer)].topics',
-            'limit': 6
-        }
-        async with self.client.get(url=items_url, params=data, proxy=proxy) as r:
-            result = await r.json()
-        self.logger.debug(result)
-        return result
-    
+   
     async def get_act_article(self,url_token, *next_url) -> dict:
         """
         获取动态文章
         :return:
         """
-        url = 'https://www.zhihu.com'
-        for _ in range(2):
-            async with self.client.get(url, proxy=proxy) as r:
-                resp = await r.text()
-                session_token = re.findall(r'session_token=(.*?)\&', resp)
-            if session_token:
-                session_token = session_token[0]
-                break
-        else:
-            raise AssertionError('获取session_token失败')
+        session_token = await self.get_session_token()
         if next_url:
             url = next_url[0]
         else:
             url = f'https://www.zhihu.com/api/v3/feed/members/{url_token}/activities?'
             
         data = {
+            'session_token': session_token,
             'desktop': 'true',
             'limit': '6',
         }
@@ -109,6 +88,23 @@ class ArticleSpider(SpiderBaseclass):
         self.logger.debug(result)
         return result
 
+    async def get_items_article(self, fid='114929484', *next_url):
+        session_token = await self.get_session_token()
+        items_url = f'https://www.zhihu.com/api/v4/favlists/{fid}/items?'
+        data = {
+            'session_token': session_token,
+            'include': 'data[*].created,content.comment_count,suggest_edit,is_normal,thumbnail_extra_info,thumbnail,description,content,voteup_count,created,updated,upvoted_followees,voting,review_info,is_labeled,label_info,relationship.is_authorized,voting,is_author,is_thanked,is_nothelp,is_recognized;data[*].author.badge[?(type=best_answerer)].topics',
+            'limit': 6
+        }
+        if next_url:
+            url = next_url[0]
+        else:
+            url = items_url
+        async with self.client.get(url=url, params=data, proxy=proxy) as r:
+            result = await r.json()
+        self.logger.debug(result)
+        return result
+    
 # ========================== 互动 ===============================
 
     async def endorse_answer(self, uid: str, typ: str = 'up') -> dict:

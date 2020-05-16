@@ -13,6 +13,8 @@ from print_beautify import print_question
 from print_beautify import print_save
 from print_beautify import print_user_info
 from print_beautify import print_act_article
+from print_beautify import print_items_article
+from print_beautify import print_fav_list
 from help_menu import help_recommend 
 from help_menu import help_aten 
 from help_menu import help_act
@@ -21,11 +23,13 @@ from help_menu import help_comments2
 from help_menu import help_question
 from help_menu import help_article
 from help_menu import help_user
+from help_menu import help_item
 from utils import get_com_func
 
-async def app_exit(cmd: str, spider):
+async def app_exit(cmd: str, spider=False):
     if cmd in('q', 'quit', 'exit'):
-        await spider.client.close()
+        if spider:
+            await spider.client.close()
         os._exit(0)
 
 # ========================== 用户 ===============================
@@ -51,6 +55,9 @@ async def deal_user(spider, url_token):
             continue
         elif remd_cmd[0] == "act":
             await deal_act(spider,url_token)
+            continue
+        elif remd_cmd[0] == "fav":
+            # await deal_fav(spider,url_token)
             continue
         elif remd_cmd[0] == 'question':
             question_ids = [d.get('question').get('id') for d in user_info]
@@ -450,6 +457,132 @@ async def deal_act(spider,url_token):
             continue
         elif aten_cmd[0] == 'r':
             print_act_article(aten_articles)
+            continue
+        elif aten_cmd[0] == 'n':
+            if paging.get('is_end'):
+                print_colour('已是第一页!', 'red')
+                continue
+            is_print = True
+            is_next = True
+            continue
+        elif aten_cmd[0] == 'user':
+            user_info = await spider.get_user_info(aten_cmd[1])
+            if user_info == False:
+                print_colour('用户不存在或url_token输入有误!', 'red')
+                continue
+            await deal_user(spider, aten_cmd[1])
+            continue
+        elif aten_cmd[0] == 'read':
+            if len(aten_cmd) != 2:
+                print_colour('输入有误!', 'red')
+                continue
+            if aten_cmd[1] not in ids:
+                print_colour('输入id有误! 请检查id是否在此页', 'red')
+                continue
+            output = [d for d in aten_articles if d['id'] == aten_cmd[1]][0]
+            print_article_content(output)
+            await deal_article(spider, output)
+            continue
+        elif aten_cmd[0] == 'question':
+            question_ids = [d.get('question').get('id') for d in aten_articles]
+            if len(aten_cmd) != 2:
+                print_colour('输入有误!', 'red')
+                continue
+            if aten_cmd[1] not in question_ids:
+                print_colour('输入id有误!', 'red')
+                continue
+            assert len(ids) == len(question_ids)
+            id_map = dict(zip(question_ids, ids))
+            uid = id_map[aten_cmd[1]]
+            await deal_question(spider, aten_cmd[1], uid)
+            continue
+        elif aten_cmd[0] == 'back':
+            break
+        else:
+            print_colour('输入有误!', 'red')
+            continue
+
+# async def deal_fav(spider, url_token):
+#     is_next = False
+#     is_print = True
+#     paging = {}
+#     while True:
+#         if is_print:
+#             if is_next:
+#                 next_url = paging['next']
+#                 fav_list = await spider.get_fav_list(url_token, next_url)
+#                 fid = fav_list['id']
+#                 paging = fav_list.pop(-1)
+#                 print_fav_list(fav_list)
+#             else:
+#                 fav_list = await spider.get_fav_list(url_token)
+#                 paging = fav_list.pop(-1)
+#                 print_fav_list(fav_list)
+#             is_print = False
+#             is_next = False
+#         print_colour('', 'yellow')
+#         remd_cmd = input(help_fav()).lower()
+#         remd_cmd = remd_cmd.split(':')
+#         if not remd_cmd:
+#             print_colour('输入有误!', 'red')
+#             continue
+#         await app_exit(remd_cmd[0], spider)
+#         if remd_cmd[0] == 'r':
+#             print_fav_list(fav_list)
+#             continue
+#         elif remd_cmd[0] == "item":
+#             await deal_items(spider,fid)
+#             continue
+#         elif remd_cmd[0] == 'n':
+#             if paging.get('is_end'):
+#                 print_colour('已是第一页!', 'red')
+#                 continue
+#             is_print = True
+#             is_next = True
+#             continue
+#         elif remd_cmd[0] == 'back':
+#             break
+#         else:
+#             print_colour('输入有误!', 'red')
+#             continue
+
+
+async def deal_items(spider,fid='114929484'):
+    """
+    处理推荐文章命令
+    :param spider:
+    :return:
+    """
+    is_next = False
+    is_print = True
+    paging = {}
+    while True:
+        if is_print:
+            if is_next:
+                next_url = paging['next']
+                aten_articles = await spider.get_items_article(fid, next_url)
+                paging = aten_articles.pop(-1)
+                ids = [d.get('id') for d in aten_articles]
+                print_items_article(aten_articles)
+            else:
+                aten_articles = await spider.get_items_article(fid)
+                paging = aten_articles.pop(-1)
+                ids = [d.get('id') for d in aten_articles]
+                print_items_article(aten_articles)
+            is_print = False
+            is_next = False
+        print_colour('', 'yellow')
+        aten_cmd = input(help_item()).lower()
+        aten_cmd = aten_cmd.split(':')
+        if not aten_cmd:
+            print_colour('输入有误!', 'red')
+            continue
+        await app_exit(aten_cmd[0], spider)
+        if aten_cmd[0] == 'f':
+            is_print = True
+            continue
+        elif aten_cmd[0] == 'r':
+            print_items_article(aten_articles)
             continue
         elif aten_cmd[0] == 'n':
             if paging.get('is_end'):

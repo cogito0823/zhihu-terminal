@@ -19,6 +19,7 @@ from help_menu import help_main
 from deal_action import deal_remd
 from deal_action import deal_aten
 from deal_action import deal_user
+from deal_action import deal_items
 from deal_action import app_exit
         
 async def run(client):
@@ -37,6 +38,8 @@ async def run(client):
             await deal_remd(spider)
         elif cmd == 'aten':
             await deal_aten(spider)
+        elif cmd == 'item':
+            await deal_items(spider)
         else:
             print_colour('输入有误!', 'red')
             continue
