@@ -60,7 +60,7 @@ async def login(user='', password='', whether_load_cookies = True):
         return False
     return client
 
-async def create_zhihu_client():
+async def get_zhihu_client():
     check_setting()
     print("你可以在任何时刻输入'back'返回上一层，或输入'q'退出程序。")
     await asyncio.sleep(1)
@@ -113,11 +113,9 @@ async def create_zhihu_client():
 async def main():
     try:
         zhihu_client = False
-        zhihu_client = await create_zhihu_client()
+        zhihu_client = await get_zhihu_client()
         print_logo()
         await run(zhihu_client)
-    # except Exception as e:
-    #     print_colour(e, 'red')
     finally:
         print_colour('欢迎再次使用')
         if zhihu_client:
