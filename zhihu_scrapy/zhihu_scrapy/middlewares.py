@@ -105,47 +105,91 @@ class ZhihuScrapyDownloaderMiddleware(object):
         spider.logger.info('Spider opened: %s' % spider.name)
 
 class ProxyMiddleware(object):
-    # def process_request(self, request, spider):
-    #     request.meta['proxy'] = 'http://forward.xdaili.cn:80'
-    #     auth = self.tt()
-    #     request.headers['Proxy-Authorization'] = auth
+    def process_request(self, request, spider):
+        request.meta['proxy'] = 'http://forward.xdaili.cn:80'
+        auth = self.tt()
+        request.headers['Proxy-Authorization'] = auth
         
-    # def tt(self):
-    #     _version = sys.version_info
-    #     is_python3 = (_version[0] == 3)
-    #     orderno = "ZF202042702563OjFMf"
-    #     secret = "8124740b580246499a8516f75d38186f"
-    #     timestamp = str(int(time.time()))              
-    #     string = ""
-    #     string = "orderno=" + orderno + "," + "secret=" + secret + "," + "timestamp=" + timestamp
-    #     if is_python3:                          
-    #         string = string.encode()
-    #     md5_string = hashlib.md5(string).hexdigest()                
-    #     sign = md5_string.upper()
-    #     auth = "sign=" + sign + "&" + "orderno=" + orderno + "&" + "timestamp=" + timestamp
-    #     return auth       
-    # def process_exception(self, request, exception, spider):
-    #     # 出现异常时（超时）使用代理
-    #     print("\n出现异常，正在使用代理重试....\n")
-    #     request.meta['proxy'] = 'http://forward.xdaili.cn:80'
-    #     auth = self.tt()
-    #     request.headers['Proxy-Authorization'] = auth
-    #     return request
+    def tt(self):
+        _version = sys.version_info
+        is_python3 = (_version[0] == 3)
+        orderno = "ZF202042702563OjFMf"
+        secret = "8124740b580246499a8516f75d38186f"
+        timestamp = str(int(time.time()))              
+        string = ""
+        string = "orderno=" + orderno + "," + "secret=" + secret + "," + "timestamp=" + timestamp
+        if is_python3:                          
+            string = string.encode()
+        md5_string = hashlib.md5(string).hexdigest()                
+        sign = md5_string.upper()
+        auth = "sign=" + sign + "&" + "orderno=" + orderno + "&" + "timestamp=" + timestamp
+        return auth       
+    def process_exception(self, request, exception, spider):
+        # 出现异常时（超时）使用代理
+        print("\n出现异常，正在使用代理重试....\n")
+        request.meta['proxy'] = 'http://forward.xdaili.cn:80'
+        auth = self.tt()
+        request.headers['Proxy-Authorization'] = auth
+        return request
     
 # ==============================================================
 
 # 蘑菇
     
-    def process_request(self, request, spider):
-        request.meta['proxy'] = 'http://secondtransfer.moguproxy.com:9001'
-        request.headers['Proxy-Authorization'] = 'M2dzMTFNekp0ZDRweVFZMjoxQWpKdHJvcEhhQ1hQbGFI'
-           
-    def process_exception(self, request, exception, spider):
-        request.meta['proxy'] = 'http://secondtransfer.moguproxy.com:9001'
-        request.headers['Proxy-Authorization'] = 'Basic M2dzMTFNekp0ZDRweVFZMjoxQWpKdHJvcEhhQ1hQbGFI'
-        return request
-        
     # def process_request(self, request, spider):
-    #     request.meta['proxy'] = 'http://117.43.92.46:8889'
-    
+    #     request.meta['proxy'] = 'http://secondtransfer.moguproxy.com:9001'
+    #     request.headers['Proxy-Authorization'] = 'MldzS2dCUWxEb1BVZUpmNDpoYlVsN0VwUkV6NXA4aVF3'
+           
+    # def process_exception(self, request, exception, spider):
+        
+    #     request.meta['proxy'] = 'http://secondtransfer.moguproxy.com:9001'
+    #     request.headers['Proxy-Authorization'] = 'Basic MldzS2dCUWxEb1BVZUpmNDpoYlVsN0VwUkV6NXA4aVF3'
+    #     return request
+    # def process_response(self, request, response, spider):
+    #     from scrapy import log
+    #     import random
+    #     if response.status in [403]:
+    #         user_agent_list = [
+    #             "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 "
+    #             "(KHTML, like Gecko) Chrome/22.0.1207.1 Safari/537.1",
+    #             "Mozilla/5.0 (X11; CrOS i686 2268.111.0) AppleWebKit/536.11 "
+    #             "(KHTML, like Gecko) Chrome/20.0.1132.57 Safari/536.11",
+    #             "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.6 "
+    #             "(KHTML, like Gecko) Chrome/20.0.1092.0 Safari/536.6",
+    #             "Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.6 "
+    #             "(KHTML, like Gecko) Chrome/20.0.1090.0 Safari/536.6",
+    #             "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.1 "
+    #             "(KHTML, like Gecko) Chrome/19.77.34.5 Safari/537.1",
+    #             "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/536.5 "
+    #             "(KHTML, like Gecko) Chrome/19.0.1084.9 Safari/536.5",
+    #             "Mozilla/5.0 (Windows NT 6.0) AppleWebKit/536.5 "
+    #             "(KHTML, like Gecko) Chrome/19.0.1084.36 Safari/536.5",
+    #             "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.3 "
+    #             "(KHTML, like Gecko) Chrome/19.0.1063.0 Safari/536.3",
+    #             "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/536.3 "
+    #             "(KHTML, like Gecko) Chrome/19.0.1063.0 Safari/536.3",
+    #             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_0) AppleWebKit/536.3 "
+    #             "(KHTML, like Gecko) Chrome/19.0.1063.0 Safari/536.3",
+    #             "Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.3 "
+    #             "(KHTML, like Gecko) Chrome/19.0.1062.0 Safari/536.3",
+    #             "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.3 "
+    #             "(KHTML, like Gecko) Chrome/19.0.1062.0 Safari/536.3",
+    #             "Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.3 "
+    #             "(KHTML, like Gecko) Chrome/19.0.1061.1 Safari/536.3",
+    #             "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.3 "
+    #             "(KHTML, like Gecko) Chrome/19.0.1061.1 Safari/536.3",
+    #             "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/536.3 "
+    #             "(KHTML, like Gecko) Chrome/19.0.1061.1 Safari/536.3",
+    #             "Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.3 "
+    #             "(KHTML, like Gecko) Chrome/19.0.1061.0 Safari/536.3",
+    #             "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.24 "
+    #             "(KHTML, like Gecko) Chrome/19.0.1055.1 Safari/535.24",
+    #             "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/535.24 "
+    #             "(KHTML, like Gecko) Chrome/19.0.1055.1 Safari/535.24"
+    #         ]
+    #         ua = random.choice(user_agent_list)
+    #         if ua:
+    #             request.headers['User-Agent'] = ua
+    #             return request
+    #     return response
     

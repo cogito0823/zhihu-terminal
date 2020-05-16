@@ -1,0 +1,82 @@
+{
+    "status": "ok",
+    "datas": {
+        "zhihu_scrapy": {
+            "user": {
+                "2020-05-16T01_43_21": {
+                    "log_path": "/root/zhihu-terminal/zhihu_scrapy/logs/zhihu_scrapy/user/2020-05-16T01_43_21.log",
+                    "json_path": "/root/zhihu-terminal/zhihu_scrapy/logs/zhihu_scrapy/user/2020-05-16T01_43_21.json",
+                    "json_url": "http://129.204.67.49:6800/logs/zhihu_scrapy/user/2020-05-16T01_43_21.json",
+                    "size": 504293,
+                    "position": 504293,
+                    "status": "ok",
+                    "pages": 298,
+                    "items": 0,
+                    "first_log_time": "2020-05-16 01:43:28",
+                    "latest_log_time": "2020-05-16 01:44:05",
+                    "runtime": "0:00:37",
+                    "shutdown_reason": "Received SIGTERM",
+                    "finish_reason": "shutdown",
+                    "last_update_time": "2020-05-16 01:44:15"
+                },
+                "2020-05-16T01_16_30": {
+                    "log_path": "/root/zhihu-terminal/zhihu_scrapy/logs/zhihu_scrapy/user/2020-05-16T01_16_30.log",
+                    "json_path": "/root/zhihu-terminal/zhihu_scrapy/logs/zhihu_scrapy/user/2020-05-16T01_16_30.json",
+                    "json_url": "http://129.204.67.49:6800/logs/zhihu_scrapy/user/2020-05-16T01_16_30.json",
+                    "size": 4089908,
+                    "position": 4089908,
+                    "status": "ok",
+                    "pages": 1774,
+                    "items": 287,
+                    "first_log_time": "2020-05-16 01:16:41",
+                    "latest_log_time": "2020-05-16 01:21:06",
+                    "runtime": "0:04:25",
+                    "shutdown_reason": "Received SIGTERM",
+                    "finish_reason": "shutdown",
+                    "last_update_time": "2020-05-16 01:21:18"
+                },
+                "2020-05-17T06_02_08": {
+                    "log_path": "/root/zhihu-terminal/zhihu_scrapy/logs/zhihu_scrapy/user/2020-05-17T06_02_08.log",
+                    "json_path": "/root/zhihu-terminal/zhihu_scrapy/logs/zhihu_scrapy/user/2020-05-17T06_02_08.json",
+                    "json_url": "http://129.204.67.49:6800/logs/zhihu_scrapy/user/2020-05-17T06_02_08.json",
+                    "size": 1889691,
+                    "position": 1889691,
+                    "status": "ok",
+                    "pages": 425,
+                    "items": 358,
+                    "first_log_time": "2020-05-17 06:02:20",
+                    "latest_log_time": "2020-05-17 06:08:53",
+                    "runtime": "0:06:33",
+                    "shutdown_reason": "N/A",
+                    "finish_reason": "finished",
+                    "last_update_time": "2020-05-17 06:08:53"
+                }
+            }
+        }
+    },
+    "settings_py": "/root/anaconda3/lib/python3.7/site-packages/logparser/settings.py",
+    "settings": {
+        "scrapyd_server": "129.204.67.49:6800",
+        "scrapyd_logs_dir": "/root/zhihu-terminal/zhihu_scrapy/logs",
+        "parse_round_interval": 10,
+        "enable_telnet": true,
+        "override_telnet_console_host": "",
+        "log_encoding": "utf-8",
+        "log_extensions": [
+            ".log",
+            ".txt"
+        ],
+        "log_head_lines": 100,
+        "log_tail_lines": 200,
+        "log_categories_limit": 10,
+        "jobs_to_keep": 100,
+        "chunk_size": 10000000,
+        "delete_existing_json_files_at_startup": false,
+        "keep_data_in_memory": false,
+        "verbose": false,
+        "main_pid": 0
+    },
+    "last_update_timestamp": 1589668259,
+    "last_update_time": "2020-05-17 06:30:59",
+    "logparser_version": "0.8.2"
+}

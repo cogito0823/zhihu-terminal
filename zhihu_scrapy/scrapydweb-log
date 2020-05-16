@@ -1,0 +1,178 @@
+nohup: ignoring input
+[2020-05-16 23:03:56,232] INFO     in logparser.run: LogParser version: 0.8.2
+[2020-05-16 23:03:56,232] INFO     in logparser.run: Use 'logparser -h' to get help
+[2020-05-16 23:03:56,232] INFO     in logparser.run: Main pid: 28877
+[2020-05-16 23:03:56,232] INFO     in logparser.run: Check out the config file below for more advanced settings.
+[2020-05-16 23:03:56,234] DEBUG    in logparser.run: Reading settings from command line: Namespace(delete_json_files=False, disable_telnet=False, main_pid=0, scrapyd_logs_dir='/root/zhihu-terminal/zhihu_scrapy/logs', scrapyd_server='129.204.67.49:6800', sleep=10, verbose=False)
+[2020-05-16 23:03:56,234] DEBUG    in logparser.run: Checking config
+[2020-05-16 23:03:56,234] INFO     in logparser.run: SCRAPYD_SERVER: 129.204.67.49:6800
+[2020-05-16 23:03:56,234] INFO     in logparser.run: SCRAPYD_LOGS_DIR: /root/zhihu-terminal/zhihu_scrapy/logs
+[2020-05-16 23:03:56,234] INFO     in logparser.run: PARSE_ROUND_INTERVAL: 10
+[2020-05-16 23:03:56,234] INFO     in logparser.run: ENABLE_TELNET: True
+[2020-05-16 23:03:56,234] INFO     in logparser.run: DELETE_EXISTING_JSON_FILES_AT_STARTUP: False
+[2020-05-16 23:03:56,234] INFO     in logparser.run: VERBOSE: False
+[2020-05-16 23:04:06,401] WARNING  in logparser.logparser: New logfile found: /root/zhihu-terminal/zhihu_scrapy/logs/zhihu_scrapy/user/2020-05-16T01_43_21.log (504293 bytes)
+[2020-05-16 23:04:06,408] WARNING  in logparser.logparser: New logfile and its data with same size found: /root/zhihu-terminal/zhihu_scrapy/logs/zhihu_scrapy/user/2020-05-16T01_43_21.json (size: 504293) -> skip
+[2020-05-16 23:04:06,409] WARNING  in logparser.logparser: New logfile found: /root/zhihu-terminal/zhihu_scrapy/logs/zhihu_scrapy/user/2020-05-16T01_16_30.log (4089908 bytes)
+[2020-05-16 23:04:06,418] WARNING  in logparser.logparser: New logfile and its data with same size found: /root/zhihu-terminal/zhihu_scrapy/logs/zhihu_scrapy/user/2020-05-16T01_16_30.json (size: 4089908) -> skip
+[2020-05-16 23:04:06,419] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:04:06,419] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:04:16,451] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:04:16,451] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:04:26,491] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:04:26,491] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:04:36,507] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:04:36,507] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:04:46,551] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:04:46,551] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:04:56,587] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:04:56,587] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:05:06,619] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:05:06,619] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:05:16,671] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:05:16,671] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:05:26,707] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:05:26,707] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:05:36,755] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:05:36,755] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:05:46,803] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:05:46,803] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:05:56,831] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:05:56,831] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:06:06,879] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:06:06,879] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:06:16,883] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:06:16,883] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:06:26,923] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:06:26,923] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:06:36,963] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:06:36,963] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:06:47,003] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:06:47,003] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:06:57,043] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:06:57,043] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:07:07,087] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:07:07,087] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:07:17,135] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:07:17,135] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:07:27,187] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:07:27,187] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:07:37,211] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:07:37,211] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:07:47,255] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:07:47,255] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:07:57,291] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:07:57,291] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:08:07,331] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:08:07,331] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:08:17,386] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:08:17,386] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:08:27,433] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:08:27,436] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:08:37,481] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:08:37,482] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:08:47,543] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:08:47,543] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:08:57,725] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:08:57,732] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:09:08,080] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:09:08,135] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:09:18,525] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:09:18,624] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:09:29,036] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:09:29,166] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:09:40,840] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:09:41,442] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:09:56,939] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:09:58,220] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:10:13,526] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:10:14,346] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:10:30,044] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:10:31,252] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:10:41,537] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:10:41,542] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:10:51,639] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:10:51,641] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:11:01,681] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:11:01,683] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:11:11,729] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:11:11,731] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:11:21,785] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:11:21,786] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:11:31,843] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:11:31,844] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:11:41,884] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:11:41,885] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:11:51,940] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:11:51,943] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:12:01,985] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:12:01,986] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:12:12,008] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:12:12,009] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:12:22,040] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:12:22,042] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:12:32,089] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:12:32,090] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:12:42,143] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:12:42,143] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:12:52,186] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:12:52,188] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:13:02,228] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:13:02,228] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:13:12,269] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:13:12,271] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:13:22,329] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:13:22,329] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:13:32,385] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:13:32,393] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:13:42,405] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:13:42,406] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:13:52,456] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:13:52,457] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:14:02,510] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:14:02,511] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:14:12,552] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:14:12,553] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:14:22,594] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:14:22,594] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:14:32,645] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:14:32,646] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:14:42,700] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:14:42,702] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:14:52,759] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:14:52,762] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:15:22,745] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:15:28,249] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:16:37,839] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:16:46,723] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:17:24,231] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:17:26,931] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:17:44,832] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:17:45,657] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:18:13,329] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:18:15,137] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:18:30,531] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:18:33,028] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:18:56,950] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:18:57,822] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:19:31,534] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:19:32,048] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:20:52,947] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:21:03,979] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:21:43,821] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:21:55,227] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:22:13,625] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:22:13,629] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:22:23,670] WARNING  in logparser.logparser: Saved to http://129.204.67.49:6800/logs/stats.json
+[2020-05-16 23:22:23,671] WARNING  in logparser.logparser: Sleep 10 seconds
+[2020-05-16 23:23:35,544] WARNING  in logparser.logparser: KeyboardInterrupt
+
+****************************************************************************************************
+Loading settings from /root/anaconda3/lib/python3.7/site-packages/logparser/settings.py
+****************************************************************************************************
+
+
+****************************************************************************************************
+Visit stats at: http://129.204.67.49:6800/logs/stats.json
+****************************************************************************************************
+

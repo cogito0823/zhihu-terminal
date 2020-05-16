@@ -14,6 +14,8 @@ BOT_NAME = 'zhihu_scrapy'
 SPIDER_MODULES = ['zhihu_scrapy.spiders']
 NEWSPIDER_MODULE = 'zhihu_scrapy.spiders'
 
+# DEPTH_LIMIT = 2
+
 from zhihu_scrapy.ss import auth
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
@@ -38,19 +40,20 @@ COOKIES_ENABLED = False
 
 # Disable Telnet Console (enabled by default)
 #TELNETCONSOLE_ENABLED = False
-
+DUPEFILTER_CLASS = 'scrapy.dupefilters.BaseDupeFilter'
 # Override the default request headers:
 DEFAULT_REQUEST_HEADERS = {
     'Host': 'www.zhihu.com',
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
-                    '(KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36',
+    'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36",
     # 'authorization': 'oauth c3cef7c66a1843f8b3a9e6a1e3160e20',
     # 'Connection': 'Keep-Alive',
-    'Referer': 'https://www.zhihu.com/search?type=content&q=23',
+    'Referer': 'https://www.zhihu.com/',
     'accept-encoding': 'gzip, deflate'
 }
-HTTPERROR_ALLOWED_CODES = [401,407,403,410]
-DOWNLOAD_TIMEOUT = 4
+RETRY_ENABLED = False
+REDIRECT_ENABLED = False
+HTTPERROR_ALLOWED_CODES = [401,407,410,403]
+DOWNLOAD_TIMEOUT = 15
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
@@ -67,23 +70,26 @@ DOWNLOADER_MIDDLEWARES = {
 
 # redis布隆过滤
 
-# Ensure use this Scheduler
-SCHEDULER = "scrapy_redis_bloomfilter.scheduler.Scheduler"
+# # Ensure use this Scheduler
+# SCHEDULER = "scrapy_redis_bloomfilter.scheduler.Scheduler"
 
-# Ensure all spiders share same duplicates filter through redis
-DUPEFILTER_CLASS = "scrapy_redis_bloomfilter.dupefilter.RFPDupeFilter"
-# Redis URL
-REDIS_URL = 'redis://localhost:6379/1'
-# Number of Hash Functions to use, defaults to 6
-BLOOMFILTER_HASH_NUMBER = 6
-# Redis Memory Bit of Bloomfilter Usage, 30 means 2^30 = 128MB, defaults to 30
-BLOOMFILTER_BIT = 30
-# Persist
-SCHEDULER_PERSIST = False
+# # Ensure all spiders share same duplicates filter through redis
+# DUPEFILTER_CLASS = "scrapy_redis_bloomfilter.dupefilter.RFPDupeFilter"
+# # Redis URL
+# REDIS_URL = 'redis://localhost:6379/1'
+# REDIS_PARAMS = {
+#     'password': 'asd8561735698',
+# }
+# # Number of Hash Functions to use, defaults to 6
+# BLOOMFILTER_HASH_NUMBER = 6
+# # Redis Memory Bit of Bloomfilter Usage, 30 means 2^30 = 128MB, defaults to 30
+# BLOOMFILTER_BIT = 30
+# # Persist
+# SCHEDULER_PERSIST = False
 
 # ================================================
 
-DOWNLOAD_DELAY = 0.16
+DOWNLOAD_DELAY = 0.2
 RANDOMIZE_DOWNLOAD_DELAY = True
 
 # Enable or disable extensions
@@ -121,5 +127,5 @@ ITEM_PIPELINES = {
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-MONGO_URI = 'localhost:27017'
+MONGO_URI = 'mongodb://zhihu:asd8561735698@localhost:27017/zhihu'
 MONGO_DATABASE = 'zhihu'

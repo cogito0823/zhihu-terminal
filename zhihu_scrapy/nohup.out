@@ -1,0 +1,13 @@
+2020-05-16T01:33:29+0800 [-] Loading /root/anaconda3/lib/python3.7/site-packages/scrapyd/txapp.py...
+2020-05-16T01:33:30+0800 [-] Scrapyd web console available at http://0.0.0.0:6800/
+2020-05-16T01:33:30+0800 [-] Loaded.
+2020-05-16T01:33:30+0800 [twisted.scripts._twistd_unix.UnixAppLogger#info] twistd 20.3.0 (/root/anaconda3/bin/python3 3.7.6) starting up.
+2020-05-16T01:33:30+0800 [twisted.scripts._twistd_unix.UnixAppLogger#info] reactor class: twisted.internet.epollreactor.EPollReactor.
+2020-05-16T01:33:30+0800 [-] Site starting on 6800
+2020-05-16T01:33:30+0800 [twisted.web.server.Site#info] Starting factory <twisted.web.server.Site object at 0x7fe6d1c5bd50>
+2020-05-16T01:33:30+0800 [Launcher] Scrapyd 1.2.1 started: max_proc=4, runner='scrapyd.runner'
+2020-05-16T01:34:52+0800 [-] Received SIGINT, shutting down.
+2020-05-16T01:34:52+0800 [-] (TCP Port 6800 Closed)
+2020-05-16T01:34:52+0800 [twisted.web.server.Site#info] Stopping factory <twisted.web.server.Site object at 0x7fe6d1c5bd50>
+2020-05-16T01:34:52+0800 [-] Main loop terminated.
+2020-05-16T01:34:52+0800 [twisted.scripts._twistd_unix.UnixAppLogger#info] Server Shut Down.
