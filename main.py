@@ -32,6 +32,7 @@ async def run(client):
     print_colour(f'hello {self_info["name"]} 欢迎使用知乎~', 'ultramarine')
     
     remdPage, atenPage, load = await asyncio.gather(RemdPage.create(spider),AtenPage.create(spider),loading())
+    print_colour(f'加载完成', 'ultramarine') 
     flag = True
     while flag:
         print_colour('', 'yellow')
