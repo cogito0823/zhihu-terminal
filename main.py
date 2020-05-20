@@ -16,16 +16,22 @@ from setting import COOKIE_FILE,proxy
 from utils import print_colour
 from print_beautify import print_logo
 from help_menu import help_main
-from deal_action import deal_remd
-from deal_action import deal_aten
+from deal_action import RemdPage
+from deal_action import AtenPage
 from deal_action import deal_user
 from deal_action import deal_items
 from deal_action import app_exit
-        
+       
+async def loading():
+    await asyncio.sleep(2)
+    print_colour(f'\n正在加载中...\n', 'ultramarine') 
+    
 async def run(client):
     spider = DataExtractor(client)
     self_info = await spider.get_self_info()
     print_colour(f'hello {self_info["name"]} 欢迎使用知乎~', 'ultramarine')
+    
+    remdPage, atenPage, load = await asyncio.gather(RemdPage.create(spider),AtenPage.create(spider),loading())
     flag = True
     while flag:
         print_colour('', 'yellow')
@@ -35,9 +41,9 @@ async def run(client):
             continue
         await app_exit(cmd, spider) 
         if cmd == 'remd':
-            await deal_remd(spider)
+            await remdPage.deal_remd(spider)
         elif cmd == 'aten':
-            await deal_aten(spider)
+            await atenPage.deal_aten(spider)
         elif cmd == 'item':
             await deal_items(spider)
         elif cmd == 'fav':
