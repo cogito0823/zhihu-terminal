@@ -205,7 +205,7 @@ class ZhihuClient(aiohttp.ClientSession):
 
     @staticmethod
     def _encrypt(form_data: dict) -> str:
-        with open(f'./static/encrypt.js') as f:
+        with open(f'./client_login/encrypt.js') as f:
             js = execjs.compile(f.read())
             return js.call('b', urlencode(form_data))
 
