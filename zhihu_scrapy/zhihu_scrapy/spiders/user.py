@@ -14,8 +14,8 @@ class UserSpider(Spider):
         # 'REDIS_URL': 'redis://localhost:6379/5',
         # 'SCHEDULER_PERSIST': False
     }
-    follows_url = 'https://www.zhihu.com/api/v4/members/{user}/followees?include={include}&offset={offset}&limit={limit}'
-    start_user = 'nogirlnotalk'
+    follows_url = 'https://www.zhihu.com/api/v4/members/{user}/followers?include={include}&offset={offset}&limit={limit}'
+    start_user = 'liang-hao-80'
     follows_query = ('data[*].''locations,gender,educations,business,allow_message,cover_url,following_topic_count,'
                 'following_count,thanked_count,voteup_count,following_question_count,'
                 'following_favlists_count,following_columns_count,is_followed,pins_count,answer_count,'
@@ -39,8 +39,6 @@ class UserSpider(Spider):
     i = 0
     def start_requests(self):
         yield Request(self.user_url.format(user = self.start_user,include=self.user_query),callback=self.parse_page)
-        # yield Request(self.follows_url.format(user=self.start_user, include=self.follows_query, offset=0, limit=20),
-        #               callback = self.parse_page)
         
     def parse_page(self,response):
         result = json.loads(response.text)
@@ -48,24 +46,19 @@ class UserSpider(Spider):
         for field in item.fields:
             if field in result.keys():
                 item[field] = result.get(field)
-        
         yield item
-        followee_count = result['following_count']
-        print(followee_count)
-        offset_list = [offset for offset in range(followee_count) if offset % 20 == 0]
+        follower_count = result['follower_count']
+        print(follower_count)
+        offset_list = [offset for offset in range(follower_count) if offset % 20 == 0]
         for offset in offset_list:
             yield Request(self.follows_url.format(user=self.start_user, include=self.follows_query, offset=offset, limit=20),
                         callback = self.parse_follows)
         
     def parse_follows(self, response):
         result1 = json.loads(response.text)
-        # if 'paging' in result1.keys() and result1.get('paging').get('is_end') == False:
-        #     next_page = result1.get('paging').get('next')
-        #     yield Request(next_page, callback=self.parse_follows)
         if 'data' in result1.keys():
             ie = 0
             for result1 in result1.get('data'):
-                
                 yield Request(self.user_url.format(user=result1.get('url_token'),include=self.user_query), callback=self.parse_user)
                 print(ie)
                 ie = ie+1
@@ -78,6 +71,5 @@ class UserSpider(Spider):
         for field in item.fields:
             if field in result.keys():
                 item[field] = result.get(field)
-        
         yield item
     

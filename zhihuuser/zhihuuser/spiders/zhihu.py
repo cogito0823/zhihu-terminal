@@ -10,7 +10,7 @@ class ZhihuSpider(Spider):
     allowed_domains = ['www.zhihu.com']
     start_urls = ['http://www.zhihu.com/']
     follows_url = 'https://www.zhihu.com/api/v4/members/{user}/followers?include={include}&offset={offset}&limit={limit}'
-    start_user = 'tian-kong-71-30-84'
+    start_user = 'liang-hao-80'
     follows_query = ('data[*].''locations,gender,educations,business,allow_message,cover_url,following_topic_count,'
                 'following_count,thanked_count,voteup_count,following_question_count,'
                 'following_favlists_count,following_columns_count,is_followed,pins_count,answer_count,'

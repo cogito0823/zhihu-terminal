@@ -15,7 +15,7 @@ SPIDER_MODULES = ['zhihu_scrapy.spiders']
 NEWSPIDER_MODULE = 'zhihu_scrapy.spiders'
 
 # DEPTH_LIMIT = 2
-
+LOG_LEVEL = 'INFO'
 from zhihu_scrapy.ss import auth
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
@@ -47,13 +47,14 @@ DEFAULT_REQUEST_HEADERS = {
     'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36",
     # 'authorization': 'oauth c3cef7c66a1843f8b3a9e6a1e3160e20',
     # 'Connection': 'Keep-Alive',
+    'x-zse-83': '3_2.0',
     'Referer': 'https://www.zhihu.com/',
     'accept-encoding': 'gzip, deflate'
 }
 RETRY_ENABLED = False
 REDIRECT_ENABLED = False
-HTTPERROR_ALLOWED_CODES = [401,407,410,403]
-DOWNLOAD_TIMEOUT = 15
+HTTPERROR_ALLOWED_CODES = [401,407,410,403,301]
+DOWNLOAD_TIMEOUT = 4
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
@@ -102,7 +103,7 @@ RANDOMIZE_DOWNLOAD_DELAY = True
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     'zhihu_scrapy.pipelines.UserPipeline': 300,
-    'zhihu_scrapy.pipelines.AnswerPipeline': 301,
+    'zhihu_scrapy.pipelines.AnswerPipeline': 200,
     'zhihu_scrapy.pipelines.ArticlePipeline': 302,
 }
 

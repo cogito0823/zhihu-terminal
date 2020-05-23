@@ -7,6 +7,29 @@
 
 from scrapy import Item, Field
 
+class AnswerItem(Item):
+    created = Field()
+    answer_type = Field()
+    author = Field()
+    comment_count = Field()
+    content = Field()
+    created_time = Field()
+    excerpt = Field()
+    extras = Field()
+    id = Field()
+    is_collapsed = Field()
+    is_copyable = Field()
+    is_labeled = Field()
+    is_normal = Field()
+    question = Field()
+    relationship = Field()
+    suggest_edit = Field()
+    thumbnail = Field()
+    type = Field()
+    updated_time = Field()
+    url = Field()
+    voteup_count = Field()
+
 class UserItem(Item):
     # define the fields for your item here like:
     id = Field()

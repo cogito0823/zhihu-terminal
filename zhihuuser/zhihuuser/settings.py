@@ -10,7 +10,7 @@
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
 BOT_NAME = 'zhihuuser'
-
+DUPEFILTER_CLASS = 'scrapy.dupefilters.BaseDupeFilter'
 SPIDER_MODULES = ['zhihuuser.spiders']
 NEWSPIDER_MODULE = 'zhihuuser.spiders'
 
@@ -71,19 +71,19 @@ DOWNLOADER_MIDDLEWARES = {
 
 # redis布隆过滤
 
-# Ensure use this Scheduler
-SCHEDULER = "scrapy_redis_bloomfilter.scheduler.Scheduler"
+# # Ensure use this Scheduler
+# SCHEDULER = "scrapy_redis_bloomfilter.scheduler.Scheduler"
 
-# Ensure all spiders share same duplicates filter through redis
-DUPEFILTER_CLASS = "scrapy_redis_bloomfilter.dupefilter.RFPDupeFilter"
-# Redis URL
-REDIS_URL = 'redis://localhost:6379/0'
-# Number of Hash Functions to use, defaults to 6
-BLOOMFILTER_HASH_NUMBER = 6
-# Redis Memory Bit of Bloomfilter Usage, 30 means 2^30 = 128MB, defaults to 30
-BLOOMFILTER_BIT = 30
-# Persist
-SCHEDULER_PERSIST = False
+# # Ensure all spiders share same duplicates filter through redis
+# DUPEFILTER_CLASS = "scrapy_redis_bloomfilter.dupefilter.RFPDupeFilter"
+# # Redis URL
+# REDIS_URL = 'redis://localhost:6379/0'
+# # Number of Hash Functions to use, defaults to 6
+# BLOOMFILTER_HASH_NUMBER = 6
+# # Redis Memory Bit of Bloomfilter Usage, 30 means 2^30 = 128MB, defaults to 30
+# BLOOMFILTER_BIT = 30
+# # Persist
+# SCHEDULER_PERSIST = False
 
 # ================================================
 
@@ -123,5 +123,5 @@ ITEM_PIPELINES = {
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-MONGO_URI = 'localhost:27017'
+MONGO_URI = 'mongodb://zhihu:asd8561735698@localhost:27017/zhihu'
 MONGO_DATABASE = 'zhihu'

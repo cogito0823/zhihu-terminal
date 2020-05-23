@@ -367,12 +367,12 @@ class AtenPage():
                 if is_next:
                     next_url = paging['next']
                     self.aten_articles = await spider.get_aten_article(next_url)
-                    aten_articles = self.aten_articles
+                    aten_articles = self.aten_articles[:]
                     paging = aten_articles.pop(-1)
                     ids = [d.get('id') for d in aten_articles]
                     print_aten_article(aten_articles)
                 else:
-                    aten_articles = self.aten_articles
+                    aten_articles = self.aten_articles[:]
                     paging = aten_articles.pop(-1)
                     ids = [d.get('id') for d in aten_articles]
                     print_aten_article(aten_articles)
