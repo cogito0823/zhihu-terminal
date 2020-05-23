@@ -1,29 +1,29 @@
 import os
 
-from print_beautify import print_colour
-from print_beautify import print_recommend_article
-from print_beautify import print_aten_article 
-from print_beautify import print_vote_comments 
-from print_beautify import print_article_content 
-from print_beautify import print_article_content
-from print_beautify import print_article_content 
-from print_beautify import print_comments 
-from print_beautify import print_vote_thank 
-from print_beautify import print_question
-from print_beautify import print_save
-from print_beautify import print_user_info
-from print_beautify import print_act_article
-from print_beautify import print_items_article
-from print_beautify import print_fav_list
-from help_menu import help_recommend 
-from help_menu import help_aten 
-from help_menu import help_act
-from help_menu import help_comments 
-from help_menu import help_comments2 
-from help_menu import help_question
-from help_menu import help_article
-from help_menu import help_user
-from help_menu import help_item
+from show_page.print_beautify import print_colour
+from show_page.print_beautify import print_recommend_article
+from show_page.print_beautify import print_aten_article 
+from show_page.print_beautify import print_vote_comments 
+from show_page.print_beautify import print_article_content 
+from show_page.print_beautify import print_article_content
+from show_page.print_beautify import print_article_content 
+from show_page.print_beautify import print_comments 
+from show_page.print_beautify import print_vote_thank 
+from show_page.print_beautify import print_question
+from show_page.print_beautify import print_save
+from show_page.print_beautify import print_user_info
+from show_page.print_beautify import print_act_article
+from show_page.print_beautify import print_items_article
+from show_page.print_beautify import print_fav_list
+from show_page.help_menu import help_recommend 
+from show_page.help_menu import help_aten 
+from show_page.help_menu import help_act
+from show_page.help_menu import help_comments 
+from show_page.help_menu import help_comments2 
+from show_page.help_menu import help_question
+from show_page.help_menu import help_article
+from show_page.help_menu import help_user
+from show_page.help_menu import help_item
 
 async def app_exit(cmd: str, spider=False):
     if cmd in('q', 'quit', 'exit'):

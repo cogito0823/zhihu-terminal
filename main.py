@@ -5,15 +5,15 @@ from aiohttp import ClientTimeout
 from zhihu_client import ZhihuClient
 from data_extractor import DataExtractor
 
-from print_beautify import print_colour
 from aiohttp import TCPConnector
 
 from setting import USER as default_username
 from setting import PASSWORD as default_password
 from setting import SAVE_DIR
 from setting import COOKIE_FILE,proxy
-from print_beautify import print_logo
-from help_menu import help_main
+from show_page.print_beautify import print_colour
+from show_page.print_beautify import print_logo
+from show_page.help_menu import help_main
 from deal_action import RemdPage
 from deal_action import AtenPage
 from deal_action import deal_user
