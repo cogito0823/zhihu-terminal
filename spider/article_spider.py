@@ -3,7 +3,7 @@
 """
 import re
 import asyncio
-from zhihu_client import ZhihuClient
+from client_login.zhihu_client import ZhihuClient
 from spider.spiderBaseclass import SpiderBaseclass
 from setting import proxy
 

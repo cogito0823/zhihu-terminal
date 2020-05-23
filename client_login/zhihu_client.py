@@ -20,7 +20,7 @@ from show_page.print_beautify import print_colour
 from log import get_logger
 from setting import COOKIE_FILE,proxy
 from setting import proxy_headers
-import detect_captcha
+from client_login import detect_captcha
 from aiohttp import TCPConnector
 from deal_action import app_exit
 
@@ -143,9 +143,10 @@ class ZhihuClient(aiohttp.ClientSession):
                 whether_use_detect_aptcha =input('是否使用打码平台(y|n): ')
                 if whether_use_detect_aptcha == 'back':
                     return 'back'
+                await asyncio.sleep(0.3)
                 await app_exit(whether_use_detect_aptcha)
+                # 识别验证码
                 if whether_use_detect_aptcha == 'y':
-                        # 这里可自行集成验证码识别模块
                         pic_str = detect_captcha.detect('captcha.jpg')
                         capt = pic_str
                 else:

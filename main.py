@@ -2,7 +2,7 @@ import os
 import sys
 import asyncio
 from aiohttp import ClientTimeout
-from zhihu_client import ZhihuClient
+from client_login.zhihu_client import ZhihuClient
 from data_extractor import DataExtractor
 
 from aiohttp import TCPConnector

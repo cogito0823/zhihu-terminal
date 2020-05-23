@@ -58,7 +58,7 @@ class CommentSpider(SpiderBaseclass):
 if __name__ == '__main__':
     import asyncio
     from setting import USER, PASSWORD
-    from zhihu_client import ZhihuClient
+    from client_login.zhihu_client import ZhihuClient
 
     async def test():
         client = ZhihuClient(user=USER, password=PASSWORD)
