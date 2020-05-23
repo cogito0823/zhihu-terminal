@@ -1,6 +1,6 @@
 import os
 
-from utils import print_colour
+from print_beautify import print_colour
 from print_beautify import print_recommend_article
 from print_beautify import print_aten_article 
 from print_beautify import print_vote_comments 
@@ -24,13 +24,24 @@ from help_menu import help_question
 from help_menu import help_article
 from help_menu import help_user
 from help_menu import help_item
-from utils import get_com_func
 
 async def app_exit(cmd: str, spider=False):
     if cmd in('q', 'quit', 'exit'):
         if spider:
             await spider.client.close()
         os._exit(0)
+
+cmd_func_map = {
+    'up': 'endorse_answer',
+    'down': 'endorse_answer',
+    'neutral': 'endorse_answer',
+    'thank': 'thank_answer',
+    'unthank': 'thank_answer',
+    'read-cmt': 'get_comments',
+}
+
+def get_com_func(cmd):
+    return cmd_func_map[cmd]
 
 # ========================== 用户 ===============================
 

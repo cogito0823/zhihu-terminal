@@ -4,7 +4,7 @@
 import re
 import asyncio
 from zhihu_client import ZhihuClient
-from utils import SpiderBaseclass
+from spider.spiderBaseclass import SpiderBaseclass
 from setting import proxy
 
 class ArticleSpider(SpiderBaseclass):

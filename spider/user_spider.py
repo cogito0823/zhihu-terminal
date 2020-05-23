@@ -1,4 +1,4 @@
-from utils import SpiderBaseclass
+from spider.spiderBaseclass import SpiderBaseclass
 from setting import proxy
 
 class UserSpider(SpiderBaseclass):

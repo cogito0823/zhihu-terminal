@@ -16,7 +16,7 @@ import time
 from typing import Union
 from PIL import Image
 from urllib.parse import urlencode
-from utils import print_colour
+from print_beautify import print_colour
 from log import get_logger
 from setting import COOKIE_FILE,proxy
 from setting import proxy_headers
