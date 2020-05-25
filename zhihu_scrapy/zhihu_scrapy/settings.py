@@ -15,7 +15,7 @@ SPIDER_MODULES = ['zhihu_scrapy.spiders']
 NEWSPIDER_MODULE = 'zhihu_scrapy.spiders'
 
 # DEPTH_LIMIT = 2
-LOG_LEVEL = 'INFO'
+LOG_LEVEL = 'DEBUG'
 from zhihu_scrapy.ss import auth
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
@@ -54,7 +54,7 @@ DEFAULT_REQUEST_HEADERS = {
 RETRY_ENABLED = False
 REDIRECT_ENABLED = False
 HTTPERROR_ALLOWED_CODES = [401,407,410,403,301]
-DOWNLOAD_TIMEOUT = 4
+DOWNLOAD_TIMEOUT = 14
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
