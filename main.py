@@ -19,7 +19,12 @@ from deal_action import AtenPage
 from deal_action import deal_user
 from deal_action import deal_items
 from deal_action import app_exit
-       
+
+def check_setting():
+    save_dir = SAVE_DIR or '/tmp/zhihu_save'
+    if not os.path.exists(save_dir):
+        os.makedirs(save_dir)
+ 
 async def loading():
     await asyncio.sleep(2)
     print_colour(f'\n正在加载中...\n', 'ultramarine') 
@@ -50,13 +55,6 @@ async def run(client):
         else:
             print_colour('输入有误!', 'red')
             continue
-
-
-def check_setting():
-    save_dir = SAVE_DIR or '/tmp/zhihu_save'
-    if not os.path.exists(save_dir):
-        os.makedirs(save_dir)
-
 
 async def login(user='', password='', whether_load_cookies = True):
     client = ZhihuClient(user, password, connector=TCPConnector(ssl=False))

@@ -216,7 +216,12 @@ async def deal_article(spider, article):
             print_colour('功能还在开发中...', 'red')
             continue
         elif arl_cmd == 'question':
-            await deal_question(spider, article.get('question').get('id'), article.get('id'))
+            question_id = article.get('question').get('id')
+            article_id = article.get('id')
+            if question_id:
+                await deal_question(spider, question_id, article_id)
+            else:
+                print_colour('此内容不是回答类型，无法查看问题详情', 'red')
             continue
         else:
             print_colour('输入有误!', 'red')
@@ -472,7 +477,7 @@ async def deal_act(spider,url_token):
             is_print = False
             is_next = False
         print_colour('', 'yellow')
-        aten_cmd = input(help_act()).lower()
+        aten_cmd = input(help_act())
         aten_cmd = aten_cmd.split(':')
         if not aten_cmd:
             print_colour('输入有误!', 'red')

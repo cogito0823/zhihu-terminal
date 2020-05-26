@@ -262,6 +262,12 @@ def print_article_content(output: dict):
     print_colour(f'|原文链接:{url}', 'purple')
     print_colour('-----------------------------------------------------', 'purple')
     print_colour(content)
+    print_colour('-----------------------------------------------------', 'purple')
+    print_colour(f'|article_id:{article_id}', 'purple')
+    print_colour(f'|question_id:{question_id}', 'purple')
+    print_colour(f'|title:{title}', 'purple')
+    print_colour(f'|原文链接:{url}', 'purple')
+    print_colour('-----------------------------------------------------', 'purple')
     
 # ========================= 问题页  =============================
 
