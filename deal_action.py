@@ -100,7 +100,7 @@ async def deal_comments_by_id(spider, uid):
         if not com2_cmd[0]:
             print_colour('输入有误!', 'red')
             continue
-        app_exit(com2_cmd[0], spider)
+        await app_exit(com2_cmd[0], spider)
         if com2_cmd[0] == 'back':
             break
         elif com2_cmd[0] == 'up':
