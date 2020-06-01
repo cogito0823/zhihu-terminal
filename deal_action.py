@@ -265,6 +265,13 @@ async def deal_question(spider, question_id, uid):
         elif ques_cmd[0] == 'qsdl':
             question_detail = await spider.get_question_details(question_id, uid)
             print_question(question_detail)
+        elif ques_cmd[0] == 'user':
+                user_info = await spider.get_user_info(ques_cmd[1])
+                if user_info == False:
+                    print_colour('用户不存在或url_token输入有误!', 'red')
+                    continue
+                await deal_user(spider, ques_cmd[1])
+                continue
         elif ques_cmd[0] == 'n':
             if paging.get('is_end'):
                 print_colour('已是最后一页!', 'red')
