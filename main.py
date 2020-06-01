@@ -70,14 +70,14 @@ async def login(user='', password='', whether_load_cookies = True):
 
 async def get_zhihu_client():
     check_setting()
-    print("你可以在任何时刻输入'back'返回上一层，或输入'q'退出程序。")
+    print("你可以在任何时刻输入'back'返回上一级，或输入'q'退出程序。")
     await asyncio.sleep(1)
     while True:
-        use_cookies = input("是否直接使用cookies登录(y|n): ")
+        use_cookies = input('是否直接使用cookies登录(y|n): ')
         await app_exit(use_cookies)
         if use_cookies == 'n':
             while True:
-                use_default_account = input('是否使用默认账号(y|n): ')
+                use_default_account = input('是否使用默认账号(y|n)(输入"back"可返回上一级): ')
                 await app_exit(use_default_account)
                 if use_default_account == 'y':
                     USER = default_username
@@ -91,12 +91,12 @@ async def get_zhihu_client():
                     break
                 elif use_default_account == 'n':
                     while True:
-                        USER = input('请输入手机号: ')
+                        USER = input('请输入手机号(或"back"返回上一级): ')
                         await app_exit(USER)
                         if USER == 'back':
                             break
                         while True:
-                            PASSWORD = input('请输入密码: ')
+                            PASSWORD = input('请输入密码(或"back"返回上一级): ')
                             await app_exit(PASSWORD)
                             if PASSWORD == 'back':
                                 break

@@ -140,7 +140,7 @@ class ZhihuClient(aiohttp.ClientSession):
                 img_base64 = json_data['img_base64'].replace(r'\n', '')
                 with open(f'./captcha.jpg', 'wb') as f:
                     f.write(base64.b64decode(img_base64))
-                whether_use_detect_aptcha =input('是否使用打码平台(y|n): ')
+                whether_use_detect_aptcha =input('是否使用打码平台(y|n)(输入"back"可上一级): ')
                 if whether_use_detect_aptcha == 'back':
                     return 'back'
                 await asyncio.sleep(0.3)
@@ -149,11 +149,14 @@ class ZhihuClient(aiohttp.ClientSession):
                 if whether_use_detect_aptcha == 'y':
                         pic_str = detect_captcha.detect('captcha.jpg')
                         capt = pic_str
-                else:
+                elif whether_use_detect_aptcha == 'n':
                     capt = input('请输入图片里的验证码：')
                     await app_exit(capt)
                     if capt == 'back':
                         continue
+                else:
+                    print('输入错误')
+                    continue
                 # 这里必须先把参数 POST 验证码接口
                 await self.post(url, data={'input_text': capt}, proxy=proxy)
                 return capt
