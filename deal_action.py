@@ -111,7 +111,7 @@ async def deal_comments_by_id(spider, uid):
             print_colour(result)
             print_vote_comments(result, 'neutral')
         elif com2_cmd[0] == 'reply' and len(com2_cmd) == 2:
-            print_colour('功能还在开发中...', 'red')
+            print_colour('功能暂不可用', 'red')
             continue
         else:
             print_colour('输入有误!', 'red')
@@ -213,7 +213,7 @@ async def deal_article(spider, article):
             print_save(article)
             continue
         elif arl_cmd == 'enshrine':
-            print_colour('功能还在开发中...', 'red')
+            print_colour('功能暂不可用', 'red')
             continue
         elif arl_cmd == 'question':
             question_id = article.get('question').get('id')
