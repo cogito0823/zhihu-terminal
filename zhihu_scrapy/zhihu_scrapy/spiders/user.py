@@ -15,7 +15,7 @@ class UserSpider(Spider):
         # 'SCHEDULER_PERSIST': False
     }
     follows_url = 'https://www.zhihu.com/api/v4/members/{user}/followers?include={include}&offset={offset}&limit={limit}'
-    start_user = 'liang-hao-80'
+    start_user = 'hua-chen-15-43-10'
     follows_query = ('data[*].''locations,gender,educations,business,allow_message,cover_url,following_topic_count,'
                 'following_count,thanked_count,voteup_count,following_question_count,'
                 'following_favlists_count,following_columns_count,is_followed,pins_count,answer_count,'
@@ -42,16 +42,12 @@ class UserSpider(Spider):
         
     def parse_page(self,response):
         result = json.loads(response.text)
-        item = UserItem()
-        for field in item.fields:
-            if field in result.keys():
-                item[field] = result.get(field)
-        yield item
+        url_token = result.get('url_token')
         follower_count = result['follower_count']
         print(follower_count)
         offset_list = [offset for offset in range(follower_count) if offset % 20 == 0]
         for offset in offset_list:
-            yield Request(self.follows_url.format(user=self.start_user, include=self.follows_query, offset=offset, limit=20),
+            yield Request(self.follows_url.format(user=url_token, include=self.follows_query, offset=offset, limit=20),
                         callback = self.parse_follows)
         
     def parse_follows(self, response):
@@ -72,4 +68,7 @@ class UserSpider(Spider):
             if field in result.keys():
                 item[field] = result.get(field)
         yield item
+        
+        url_token = result.get('url_token')
+        yield Request(self.user_url.format(user = url_token,include=self.user_query),callback=self.parse_page)
     
