@@ -59,6 +59,10 @@ async def run(client):
 async def login(user='', password='', whether_load_cookies = True):
     client = ZhihuClient(user, password, connector=TCPConnector(ssl=False))
     load_cookies = False
+    if whether_load_cookies and not os.path.exists(client.cookie_file):
+        print_colour('cookie_file不存在!', 'red')
+        await client.close()
+        return False
     if whether_load_cookies and os.path.exists(client.cookie_file):
         # 如果cookie缓存存在优先读取缓存
         load_cookies = True
