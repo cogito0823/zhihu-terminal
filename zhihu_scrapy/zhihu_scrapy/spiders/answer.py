@@ -15,7 +15,7 @@ class ZhihuAnswerSpider(scrapy.Spider):
         'ITEM_PIPELINES': {'zhihu_scrapy.pipelines.AnswerPipeline':200}
     }
     answer_url = 'https://www.zhihu.com/api/v4/favlists/{fid}/items?offset={offset}&include={include}'
-    start_fid = '382116557'
+    start_fid = '114929484'
     answer_query = 'data[*].created,content.comment_count,suggest_edit,is_normal,thumbnail_extra_info,thumbnail,description,content,voteup_count,created,updated,upvoted_followees,voting,review_info,is_labeled,label_info,relationship.is_authorized,voting,is_author,is_thanked,is_nothelp,is_recognized;data[*].author.badge[?(type=best_answerer)].topics'
     
     def start_requests(self):

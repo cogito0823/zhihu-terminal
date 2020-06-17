@@ -48,9 +48,9 @@ ip_port = 'secondtransfer.moguproxy.com:9001'
 
 proxy = "http://" + ip_port
 
-appKey =  'ZnZiajc3Q01zNU1WM1lRMTpBdWFSSDRPYnF6TmRKM1ZF'
+appKey =  'd0VycjI3WEdEMzhjeW9UWTppNGVnclNmSXRIRFpJWTRt'
 
-proxy_headers = {"Proxy-Authorization": 'Basic ZnZiajc3Q01zNU1WM1lRMTpBdWFSSDRPYnF6TmRKM1ZF'}
+proxy_headers = {"Proxy-Authorization": 'Basic d0VycjI3WEdEMzhjeW9UWTppNGVnclNmSXRIRFpJWTRt'}
 
 #########################################################################
 
